@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="pref_update"
+        android:title="@string/pref_update"
+        android:summary="@string/pref_update"
+        android:defaultValue="true" />
+    <EditTextPreference android:title="@string/pref_name"
+        android:key="pref_name"
+        android:summary="@string/pref_name"
+        android:defaultValue="@string/pref_name_default"/>
+    <ListPreference
+        android:key="pref_number_question"
+        android:title="@string/pref_number_question"
+        android:dialogTitle="@string/pref_number_question"
+        android:entries="@array/pref_number_question_entries"
+        android:entryValues="@array/pref_number_question_entry_values"
+        android:defaultValue="@string/pref_number_question_default" />
+    <ListPreference
+        android:key="pref_top_score"
+        android:title="@string/pref_top_score"
+        android:dialogTitle="@string/pref_top_score"
+        android:entries="@array/pref_top_score_entries"
+        android:entryValues="@array/pref_top_score_entry_values"
+        android:defaultValue="@string/pref_top_score_default" />
+    <ListPreference
+        android:key="pref_auto_scan"
+        android:title="@string/pref_auto_scan"
+        android:dialogTitle="@string/pref_auto_scan"
+        android:entries="@array/pref_auto_scan_entries"
+        android:entryValues="@array/pref_auto_scan_entry_values"
+        android:defaultValue="@string/pref_auto_scan_default" />
+    <ListPreference
+        android:key="pref_vibrate_mode"
+        android:title="@string/pref_vibrate_mode"
+        android:dialogTitle="@string/pref_vibrate_mode"
+        android:entries="@array/pref_vibrate_mode_entries"
+        android:entryValues="@array/pref_vibrate_mode_entry_values"
+        android:defaultValue="@string/pref_vibrate_mode_default" />
+</PreferenceScreen>

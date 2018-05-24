@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Preference -->
+    <string name="pref_update">Cập nhật</string>
+    <string name="pref_name">Tên bài</string>
+    <string name="pref_name_default">tpmaker</string>
+    <string name="pref_number_question">Số câu</string>
+    <string name="pref_number_question_default">50</string>
+    <string name="pref_top_score">Hệ điểm</string>
+    <string name="pref_top_score_default">10</string>
+    <string name="pref_auto_scan">Tự động quét</string>
+    <string name="pref_auto_scan_default">1</string>
+    <string name="pref_vibrate_mode">Chế độ rung</string>
+    <string name="pref_vibrate_mode_default">0</string>
+
+    <string-array name="pref_number_question_entries">
+        <item>50</item>
+    </string-array>
+    <string-array name="pref_number_question_entry_values">
+        <item>50</item>
+    </string-array>
+
+    <string-array name="pref_top_score_entries">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+    <string-array name="pref_top_score_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="pref_auto_scan_entries">
+        <item>Tắt</item>
+        <item>0.5s</item>
+        <item>1.0s</item>
+        <item>1.5s</item>
+        <item>2.0s</item>
+        <item>2.5s</item>
+    </string-array>
+    <string-array name="pref_auto_scan_entry_values">
+        <item>0</item>
+        <item>0.5</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+    </string-array>
+
+    <string-array name="pref_vibrate_mode_entries">
+        <item>Tắt</item>
+        <item>Bật</item>
+    </string-array>
+    <string-array name="pref_vibrate_mode_entry_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+</resources>
