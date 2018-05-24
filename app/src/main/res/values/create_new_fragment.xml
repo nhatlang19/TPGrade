@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="n_frag_add">Tạo</string>
+    <string name="n_frag_cancel">Hủy</string>
+</resources>

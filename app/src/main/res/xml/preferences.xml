@@ -3,7 +3,6 @@
     <CheckBoxPreference
         android:key="pref_update"
         android:title="@string/pref_update"
-        android:summary="@string/pref_update"
         android:defaultValue="true" />
     <EditTextPreference android:title="@string/pref_name"
         android:key="pref_name"
