@@ -4,6 +4,9 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,11 +16,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.daimajia.swipe.SwipeLayout;
+import com.tpgrade.models.Topic;
+import com.tpgrade.tpgrade.Adapters.TopicAdapter;
 import com.tpgrade.tpgrade.Fragments.Home.CreateNewDialogFragment;
+import com.tpgrade.tpgrade.Fragments.Home.EditTopicDialogFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        CreateNewDialogFragment.CreateTopicDialogListener,
+        EditTopicDialogFragment.EditTopicDialogListener{
+
+    RecyclerView lvTopicList;
+    TopicAdapter topicAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +44,15 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setUpRecycleView();
+
         FloatingActionButton btnAdd = (FloatingActionButton) findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogFragment dialog = new CreateNewDialogFragment();
                 dialog.show(getFragmentManager(), "CreateNewDialogFragment");
+
             }
         });
 
@@ -43,6 +64,16 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setUpRecycleView() {
+        lvTopicList = (RecyclerView) findViewById(R.id.lv_topic_list);
+        lvTopicList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        List<Topic> arrayOfTopics = Topic.listAll(Topic.class, "created DESC");
+        topicAdapter = new TopicAdapter(arrayOfTopics);
+        topicAdapter.setContext(this);
+        lvTopicList.setAdapter(topicAdapter);
     }
 
     @Override
@@ -70,7 +101,11 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_remove_all) {
+            Topic.deleteAll(Topic.class);
+            topicAdapter.clear();
+            topicAdapter.notifyDataSetChanged();
+
             return true;
         }
 
@@ -101,5 +136,16 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFinishCreateTopicDialog(Topic topic) {
+        topicAdapter.insert(topic, 0);
+        topicAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFinishEditTopicDialog(Topic topic) {
+        topicAdapter.notifyDataSetChanged();
     }
 }

@@ -8,4 +8,13 @@
     tools:context="com.tpgrade.tpgrade.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lv_topic_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:overScrollMode="never" />
+
 </android.support.constraint.ConstraintLayout>

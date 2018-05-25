@@ -7,13 +7,23 @@
     <string name="home_nav_guide">Hướng dẫn</string>
     <string name="home_nav_about">Giới thiệu</string>
 
+    <string name="home_menu__remove_all">Xóa hết</string>
+
     <string name="home_create__title">Tạo bài mới</string>
     <string name="home_create__test_name">Tên bài</string>
     <string name="home_create__type_paper">Loại phiếu</string>
     <string name="home_create__numbers">Số câu</string>
     <string name="home_create__top_score">Hệ điểm</string>
 
+    <string name="home_edit__title">Sửa tên bài</string>
+
     <string-array name="home_create__type_paper_entries">
         <item>50</item>
     </string-array>
+
+    <string name="home_message__success">Tạo thành công</string>
+    <string name="home_message__success_update">Cập nhật thành công</string>
+    <string name="home_message__fail">Không thể tạo</string>
+    <string name="home_message__delete">Xóa?</string>
+    <string name="home_message__delete_answer">Uhm, Xóa</string>
 </resources>

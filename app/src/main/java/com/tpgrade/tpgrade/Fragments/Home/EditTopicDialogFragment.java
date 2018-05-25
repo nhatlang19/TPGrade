@@ -12,15 +12,21 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.tpgrade.models.Topic;
-import com.tpgrade.tpgrade.Adapters.TopicAdapter;
 import com.tpgrade.tpgrade.R;
 
 
-public class CreateNewDialogFragment extends DialogFragment {
+public class EditTopicDialogFragment extends DialogFragment {
+
+    private Topic currentTopic;
+
+    public void setCurrentTopic(Topic currentTopic) {
+        this.currentTopic = currentTopic;
+    }
+
 
     // 1. Defines the listener interface with a method passing back data result.
-    public interface CreateTopicDialogListener {
-        void onFinishCreateTopicDialog(Topic topic);
+    public interface EditTopicDialogListener {
+        void onFinishEditTopicDialog(Topic topic);
     }
 
     @Override
@@ -29,12 +35,9 @@ public class CreateNewDialogFragment extends DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View dialogView = inflater.inflate(R.layout.fragment_create_new, null);
+        View dialogView = inflater.inflate(R.layout.fragment_edit_topic, null);
 
         final EditText txtTestName = (EditText) dialogView.findViewById(R.id.txtTestName);
-        final Spinner spTypePaper = (Spinner)dialogView.findViewById(R.id.spTypePaper);
-        final EditText txtNumbers = (EditText) dialogView.findViewById(R.id.txtNumbers);
-        final Spinner spTopScore = (Spinner)dialogView.findViewById(R.id.spTopScore);
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -44,22 +47,23 @@ public class CreateNewDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String testName = txtTestName.getText().toString().trim();
-                        int typePaper = Integer.valueOf(spTypePaper.getSelectedItem().toString());
-                        int numbers = txtNumbers.getText().toString().trim().length() != 0 ? Integer.valueOf(txtNumbers.getText().toString()) : 0;
-                        int topScore = Integer.valueOf(spTopScore.getSelectedItem().toString());
-                        Topic topic = new Topic(testName, typePaper, numbers, topScore);
+
+                        Topic topic = Topic.findById(Topic.class, currentTopic.getId());
+                        topic.testName = testName;
                         topic.save();
 
-                        CreateTopicDialogListener listener = (CreateTopicDialogListener) getActivity();
-                        listener.onFinishCreateTopicDialog(topic);
+                        currentTopic.testName = testName;
 
-                        Toast toast = Toast.makeText(getActivity(), getString(R.string.home_message__success), Toast.LENGTH_SHORT);
+                        EditTopicDialogListener listener = (EditTopicDialogListener) getActivity();
+                        listener.onFinishEditTopicDialog(currentTopic);
+
+                        Toast toast = Toast.makeText(getActivity(), getString(R.string.home_message__success_update), Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 })
                 .setNegativeButton(R.string.n_frag_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        CreateNewDialogFragment.this.getDialog().cancel();
+                        EditTopicDialogFragment.this.getDialog().cancel();
                     }
                 });
         return builder.create();

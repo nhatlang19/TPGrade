@@ -71,8 +71,8 @@ public class MarkActivity extends AppCompatActivity {
         cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         cameraFacing = CameraCharacteristics.LENS_FACING_BACK;
 
-        textureView = findViewById(R.id.texture_view);
-        btnTakePhoto = findViewById(R.id.fab_take_photo);
+        textureView = (TextureView) findViewById(R.id.texture_view);
+        btnTakePhoto = (FloatingActionButton) findViewById(R.id.fab_take_photo);
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
