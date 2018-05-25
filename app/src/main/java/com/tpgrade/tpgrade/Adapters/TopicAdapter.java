@@ -2,6 +2,7 @@ package com.tpgrade.tpgrade.Adapters;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,10 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.tpgrade.Lib.DateUtils;
 import com.tpgrade.models.Topic;
+import com.tpgrade.tpgrade.AboutActivity;
+import com.tpgrade.tpgrade.ContestActivity;
 import com.tpgrade.tpgrade.Fragments.Home.CreateNewDialogFragment;
 import com.tpgrade.tpgrade.Fragments.Home.EditTopicDialogFragment;
 import com.tpgrade.tpgrade.HomeActivity;
@@ -38,6 +42,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
     public static class TopicViewHolder extends RecyclerView.ViewHolder {
         SwipeLayout swipeLayout;
 
+        CardView cv;
+
         TextView tvTestName;
         TextView tvNumbers;
         TextView tvCreated;
@@ -56,6 +62,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipeLayout);
             btnRemove = (LinearLayout) itemView.findViewById(R.id.btnRemove);
             btnEdit = (ImageView) itemView.findViewById(R.id.btnEdit);
+
+            cv = (CardView) itemView.findViewById(R.id.cv);
         }
     }
 
@@ -100,6 +108,14 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
                 dialog.setCurrentTopic(topic);
                 HomeActivity homeActivity = (HomeActivity) context;
                 dialog.show(homeActivity.getFragmentManager(), "EditTopicDialogFragment");
+            }
+        });
+
+        holder.swipeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ContestActivity.class);
+                context.startActivity(intent);
             }
         });
     }

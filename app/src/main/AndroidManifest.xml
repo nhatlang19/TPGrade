@@ -20,7 +20,7 @@
             android:value="tpgrade.db" />
         <meta-data
             android:name="VERSION"
-            android:value="2" />
+            android:value="3" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -29,8 +29,8 @@
             android:value="com.tpgrade.models" />
 
         <activity
-            android:label="@string/home_title"
             android:name=".HomeActivity"
+            android:label="@string/home_title"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,8 +48,12 @@
             android:name=".SettingsActivity"
             android:parentActivityName=".HomeActivity" />
         <activity
-            android:label="@string/about_title"
             android:name=".AboutActivity"
+            android:label="@string/about_title"
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".ContestActivity"
+            android:label="@string/contest_title"
             android:parentActivityName=".HomeActivity" />
     </application>
 
