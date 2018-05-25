@@ -4,10 +4,11 @@
         android:key="pref_update"
         android:title="@string/pref_update"
         android:defaultValue="true" />
-    <EditTextPreference android:title="@string/pref_name"
+    <EditTextPreference
+        android:title="@string/pref_name"
         android:key="pref_name"
         android:summary="@string/pref_name"
-        android:defaultValue="@string/pref_name_default"/>
+        android:defaultValue="@string/pref_name_default" />
     <ListPreference
         android:key="pref_number_question"
         android:title="@string/pref_number_question"

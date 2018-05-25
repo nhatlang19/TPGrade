@@ -11,6 +11,11 @@ public class Topic extends SugarRecord {
     public int numbers;
     public int topScore;
     public Date created;
+    public int answerNumber;
+    public int keyNumber;
+    public float averageScore;
+    public float minScore;
+    public float maxScore;
 
     @Ignore
     public int position;

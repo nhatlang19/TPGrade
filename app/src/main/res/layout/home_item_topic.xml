@@ -1,114 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipeLayout"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/white"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardElevation="3dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="8dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="5dp">
 
-    <RelativeLayout
-        android:id="@+id/bottom_wrapper"
+    <com.daimajia.swipe.SwipeLayout
+        android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ff7300"
-        android:weightSum="1">
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/bottom_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff7300"
+            android:weightSum="1">
 
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@android:drawable/ic_menu_delete" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/imageView2"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_toRightOf="@+id/imageView2"
-            android:text="@string/home_message__delete"
-            android:textColor="@android:color/background_light"
-            android:textSize="18sp" />
-
-        <LinearLayout
-            android:id="@+id/btnRemove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@android:color/background_light"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView3"
+            <ImageView
+                android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_message__delete_answer"
-                android:textColor="#ff7300"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@android:drawable/ic_menu_delete" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/imageView2"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@+id/imageView2"
+                android:text="@string/home_message__delete"
+                android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
-        </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="1dp"
+                android:background="@android:color/background_light"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_message__delete_answer"
+                    android:textColor="#ff7300"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/left_bottom_wrapper"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:background="@android:color/holo_blue_dark"
-        android:weightSum="1">
+        <RelativeLayout
+            android:id="@+id/left_bottom_wrapper"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:background="@android:color/holo_blue_dark"
+            android:weightSum="1">
 
-        <ImageView
-            android:id="@+id/btnEdit"
+            <ImageView
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@android:drawable/ic_menu_edit" />
+        </RelativeLayout>
+
+
+        <!-- add you views or other stuff here -->
+
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@android:drawable/ic_menu_edit" />
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
+            <TextView
+                android:id="@+id/tvTestName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_border_topic_item"
-        android:orientation="horizontal"
-        android:padding="10dp">
+            <TextView
+                android:id="@+id/tvNumbers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTestName"
+                android:layout_marginTop="5dip"
+                android:textColor="#343434"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/tvTestName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:typeface="sans" />
+            <TextView
+                android:id="@+id/tvCreated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tvNumbers"
+                android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:id="@+id/tvNumbers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvTestName"
-            android:layout_marginTop="5dip"
-            android:textColor="#343434"
-            android:textSize="12sp" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tvCreated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/tvNumbers"
-            android:layout_alignParentEnd="true" />
-
-    </RelativeLayout>
-</com.daimajia.swipe.SwipeLayout>
+    </com.daimajia.swipe.SwipeLayout>
+</android.support.v7.widget.CardView>
