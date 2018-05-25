@@ -126,7 +126,8 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_guide) {
 
         } else if (id == R.id.nav_about) {
-
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

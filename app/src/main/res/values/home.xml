@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_title">Chấm trắc nghiệm</string>
     <string name="home_app_name">TPGrade</string>
     <string name="home_email">phuoc.trang@gmail.com</string>
     <string name="home_nav_setting">Cài đặt</string>

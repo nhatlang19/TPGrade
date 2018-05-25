@@ -82,9 +82,9 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@android:color/background_light"
+        android:background="@drawable/background_border_topic_item"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/tvTestName"
