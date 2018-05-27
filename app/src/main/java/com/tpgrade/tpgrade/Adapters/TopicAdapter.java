@@ -1,6 +1,5 @@
 package com.tpgrade.tpgrade.Adapters;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -11,14 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.tpgrade.Lib.DateUtils;
 import com.tpgrade.models.Topic;
-import com.tpgrade.tpgrade.AboutActivity;
 import com.tpgrade.tpgrade.ContestActivity;
-import com.tpgrade.tpgrade.Fragments.Home.CreateNewDialogFragment;
 import com.tpgrade.tpgrade.Fragments.Home.EditTopicDialogFragment;
 import com.tpgrade.tpgrade.HomeActivity;
 import com.tpgrade.tpgrade.R;
@@ -68,8 +64,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
     }
 
 
-
-    public TopicAdapter(List<Topic> topics){
+    public TopicAdapter(List<Topic> topics) {
         this.topics = topics;
     }
 
@@ -115,6 +110,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ContestActivity.class);
+                intent.putExtra(ContestActivity.CONTEST_KEY__TOPIC_ITEM, topic);
                 context.startActivity(intent);
             }
         });

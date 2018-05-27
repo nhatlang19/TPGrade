@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="contest_title">Kiểm tra</string>
+
+    <string name="contest_nav_key">Đáp án</string>
+    <string name="contest_nav_scan">Chấm bài</string>
+    <string name="contest_nav_review">Xem lại</string>
+    <string name="contest_nav_statistic">Thống kê</string>
+    <string name="contest_nav_info">Thông tin</string>
+
+    <string name="contest_info__test_name">Tên bài</string>
+    <string name="contest_info__type_paper">Loại phiếu</string>
+    <string name="contest_info__numbers">Số câu</string>
+    <string name="contest_info__top_score">Hệ điểm</string>
+    <string name="contest_info__created">Ngày tạo</string>
+    <string name="contest_info__answer_number">Số bài chấm</string>
+    <string name="contest_info__key_number">Số đáp án</string>
+    <string name="contest_info__ave_score">Điểm trung bình</string>
+    <string name="contest_info__min_score">Điểm thấp nhất</string>
+    <string name="contest_info__max_score">Điểm cao nhất</string>
 </resources>

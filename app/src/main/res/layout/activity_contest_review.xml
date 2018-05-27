@@ -4,14 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ContestActivity">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/contest"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        android:overScrollMode="never" />
+    tools:context=".ContestReviewActivity">
 
 </android.support.constraint.ConstraintLayout>

@@ -3,9 +3,10 @@ package com.tpgrade.models;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Topic extends SugarRecord {
+public class Topic extends SugarRecord implements Serializable {
     public String testName;
     public int typePaper;
     public int numbers;
