@@ -8,6 +8,6 @@ public class ContestStatisticActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_statistic);
+        setContentView(R.layout.activity_contest_statistic);
     }
 }
