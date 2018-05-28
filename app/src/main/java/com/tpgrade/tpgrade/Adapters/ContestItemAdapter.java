@@ -9,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.tpgrade.Lib.DateUtils;
-import com.tpgrade.models.Topic;
+import com.tpgrade.contants.ContantContest;
+import com.tpgrade.tpgrade.ContestActivity;
 import com.tpgrade.tpgrade.ContestInfoActivity;
 import com.tpgrade.tpgrade.ContestKeyActivity;
 import com.tpgrade.tpgrade.ContestReviewActivity;
@@ -29,12 +27,12 @@ public class ContestItemAdapter extends RecyclerView.Adapter<ContestItemAdapter.
     private Context context;
     private List<ContestItem> items;
 
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
     public ContestItemAdapter(List<ContestItem> items) {
         this.items = items;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -71,8 +69,11 @@ public class ContestItemAdapter extends RecyclerView.Adapter<ContestItemAdapter.
                         break;
                     case "information":
                         intent = new Intent(context, ContestInfoActivity.class);
+
                         break;
                 }
+                ContestActivity activity = (ContestActivity) view.getContext();
+                intent.putExtra(ContantContest.CONTEST_KEY__TOPIC_ID, activity.getCurrentTopicId());
                 context.startActivity(intent);
             }
         });

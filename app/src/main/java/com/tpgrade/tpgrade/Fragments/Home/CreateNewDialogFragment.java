@@ -12,16 +12,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.tpgrade.models.Topic;
-import com.tpgrade.tpgrade.Adapters.TopicAdapter;
 import com.tpgrade.tpgrade.R;
 
 
 public class CreateNewDialogFragment extends DialogFragment {
-
-    // 1. Defines the listener interface with a method passing back data result.
-    public interface CreateTopicDialogListener {
-        void onFinishCreateTopicDialog(Topic topic);
-    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -32,9 +26,9 @@ public class CreateNewDialogFragment extends DialogFragment {
         View dialogView = inflater.inflate(R.layout.fragment_create_new, null);
 
         final EditText txtTestName = (EditText) dialogView.findViewById(R.id.txtTestName);
-        final Spinner spTypePaper = (Spinner)dialogView.findViewById(R.id.spTypePaper);
+        final Spinner spTypePaper = (Spinner) dialogView.findViewById(R.id.spTypePaper);
         final EditText txtNumbers = (EditText) dialogView.findViewById(R.id.txtNumbers);
-        final Spinner spTopScore = (Spinner)dialogView.findViewById(R.id.spTopScore);
+        final Spinner spTopScore = (Spinner) dialogView.findViewById(R.id.spTopScore);
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -63,5 +57,10 @@ public class CreateNewDialogFragment extends DialogFragment {
                     }
                 });
         return builder.create();
+    }
+
+    // 1. Defines the listener interface with a method passing back data result.
+    public interface CreateTopicDialogListener {
+        void onFinishCreateTopicDialog(Topic topic);
     }
 }

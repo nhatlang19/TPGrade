@@ -3,10 +3,9 @@ package com.tpgrade.models;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Topic extends SugarRecord implements Serializable {
+public class Topic extends SugarRecord {
     public String testName;
     public int typePaper;
     public int numbers;
@@ -18,6 +17,8 @@ public class Topic extends SugarRecord implements Serializable {
     public float minScore;
     public float maxScore;
 
+    @Ignore
+    public int topicId;
     @Ignore
     public int position;
 

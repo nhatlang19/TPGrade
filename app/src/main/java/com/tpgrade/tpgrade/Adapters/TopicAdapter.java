@@ -9,10 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.daimajia.swipe.SwipeLayout;
 import com.tpgrade.Lib.DateUtils;
+import com.tpgrade.contants.ContantContest;
 import com.tpgrade.models.Topic;
 import com.tpgrade.tpgrade.ContestActivity;
 import com.tpgrade.tpgrade.Fragments.Home.EditTopicDialogFragment;
@@ -27,6 +28,10 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
 
     private List<Topic> topics;
 
+    public TopicAdapter(List<Topic> topics) {
+        this.topics = topics;
+    }
+
     public void setContext(Context context) {
         this.context = context;
     }
@@ -34,40 +39,6 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
     public List<Topic> getTopics() {
         return topics;
     }
-
-    public static class TopicViewHolder extends RecyclerView.ViewHolder {
-        SwipeLayout swipeLayout;
-
-        CardView cv;
-
-        TextView tvTestName;
-        TextView tvNumbers;
-        TextView tvCreated;
-
-        LinearLayout btnRemove;
-        ImageView btnEdit;
-
-        Topic topic;
-
-        TopicViewHolder(View itemView) {
-            super(itemView);
-            tvTestName = (TextView) itemView.findViewById(R.id.tvTestName);
-            tvNumbers = (TextView) itemView.findViewById(R.id.tvNumbers);
-            tvCreated = (TextView) itemView.findViewById(R.id.tvCreated);
-
-            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipeLayout);
-            btnRemove = (LinearLayout) itemView.findViewById(R.id.btnRemove);
-            btnEdit = (ImageView) itemView.findViewById(R.id.btnEdit);
-
-            cv = (CardView) itemView.findViewById(R.id.cv);
-        }
-    }
-
-
-    public TopicAdapter(List<Topic> topics) {
-        this.topics = topics;
-    }
-
 
     @Override
     public TopicViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -106,11 +77,11 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
             }
         });
 
-        holder.swipeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ContestActivity.class);
-                intent.putExtra(ContestActivity.CONTEST_KEY__TOPIC_ITEM, topic);
+                intent.putExtra(ContantContest.CONTEST_KEY__TOPIC_ID, topic.getId());
                 context.startActivity(intent);
             }
         });
@@ -137,5 +108,33 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
     }
 
     public void update(Topic topic, int position) {
+    }
+
+    public static class TopicViewHolder extends RecyclerView.ViewHolder {
+        RelativeLayout layout;
+
+        CardView cv;
+
+        TextView tvTestName;
+        TextView tvNumbers;
+        TextView tvCreated;
+
+        LinearLayout btnRemove;
+        ImageView btnEdit;
+
+        Topic topic;
+
+        TopicViewHolder(View itemView) {
+            super(itemView);
+            tvTestName = (TextView) itemView.findViewById(R.id.tvTestName);
+            tvNumbers = (TextView) itemView.findViewById(R.id.tvNumbers);
+            tvCreated = (TextView) itemView.findViewById(R.id.tvCreated);
+
+            layout = (RelativeLayout) itemView.findViewById(R.id.layout);
+            btnRemove = (LinearLayout) itemView.findViewById(R.id.btnRemove);
+            btnEdit = (ImageView) itemView.findViewById(R.id.btnEdit);
+
+            cv = (CardView) itemView.findViewById(R.id.cv);
+        }
     }
 }

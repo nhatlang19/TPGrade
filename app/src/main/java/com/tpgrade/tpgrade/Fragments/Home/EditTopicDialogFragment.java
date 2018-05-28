@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.tpgrade.models.Topic;
@@ -21,12 +20,6 @@ public class EditTopicDialogFragment extends DialogFragment {
 
     public void setCurrentTopic(Topic currentTopic) {
         this.currentTopic = currentTopic;
-    }
-
-
-    // 1. Defines the listener interface with a method passing back data result.
-    public interface EditTopicDialogListener {
-        void onFinishEditTopicDialog(Topic topic);
     }
 
     @Override
@@ -67,5 +60,10 @@ public class EditTopicDialogFragment extends DialogFragment {
                     }
                 });
         return builder.create();
+    }
+
+    // 1. Defines the listener interface with a method passing back data result.
+    public interface EditTopicDialogListener {
+        void onFinishEditTopicDialog(Topic topic);
     }
 }

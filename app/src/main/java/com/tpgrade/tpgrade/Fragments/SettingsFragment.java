@@ -34,7 +34,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if (pref instanceof ListPreference) {
             ListPreference listPref = (ListPreference) pref;
             pref.setSummary(listPref.getEntry());
-        } else if(pref instanceof EditTextPreference) {
+        } else if (pref instanceof EditTextPreference) {
             EditTextPreference listPref = (EditTextPreference) pref;
             pref.setSummary(listPref.getText());
         }
