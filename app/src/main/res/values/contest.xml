@@ -2,6 +2,8 @@
 <resources>
     <string name="contest_title">Kiểm tra</string>
 
+    <string name="contest_message__error">Không thể lấy dữ liệu</string>
+
     <string name="contest_nav_key">Đáp án</string>
     <string name="contest_nav_scan">Chấm bài</string>
     <string name="contest_nav_review">Xem lại</string>

@@ -3,6 +3,7 @@ package com.tpgrade.tpgrade;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tpgrade.Lib.DateUtils;
 import com.tpgrade.contants.ContantContest;
@@ -30,17 +31,22 @@ public class ContestInfoActivity extends AppCompatActivity {
         TextView tvInfoMinScore = (TextView) findViewById(R.id.tvInfoMinScore);
         TextView tvInfoMaxScore = (TextView) findViewById(R.id.tvInfoMaxScore);
 
-        Topic topic = Topic.findById(Topic.class, currentTopicId);
+        Topic topic = Topic.findById(Topic.class, 0);
 
-        tvInfoTestName.setText(topic.testName);
-        tvInfoTypePaper.setText(topic.typePaper + "");
-        tvInfoNumbers.setText(topic.numbers + "");
-        tvInfoTopScore.setText(topic.topScore + "");
-        tvInfoCreated.setText(DateUtils.formatCreated(topic.created));
-        tvInfoAnswerNumber.setText(topic.answerNumber + "");
-        tvInfoKeyNumber.setText(topic.keyNumber + "");
-        tvInfoAvgScore.setText(topic.averageScore + "");
-        tvInfoMinScore.setText(topic.minScore + "");
-        tvInfoMaxScore.setText(topic.maxScore + "");
+        if (topic != null) {
+            tvInfoTestName.setText(topic.testName);
+            tvInfoTypePaper.setText(topic.typePaper + "");
+            tvInfoNumbers.setText(topic.numbers + "");
+            tvInfoTopScore.setText(topic.topScore + "");
+            tvInfoCreated.setText(DateUtils.formatCreated(topic.created));
+            tvInfoAnswerNumber.setText(topic.answerNumber + "");
+            tvInfoKeyNumber.setText(topic.keyNumber + "");
+            tvInfoAvgScore.setText(topic.averageScore + "");
+            tvInfoMinScore.setText(topic.minScore + "");
+            tvInfoMaxScore.setText(topic.maxScore + "");
+        } else {
+            Toast.makeText(this, getString(R.string.contest_message__error), Toast.LENGTH_LONG).show();
+            this.finish();
+        }
     }
 }
