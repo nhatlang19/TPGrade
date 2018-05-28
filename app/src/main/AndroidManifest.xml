@@ -7,9 +7,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera2" />
+    <uses-feature android:name="android.hardware.camera2.autofocus" android:required="false"/>
 
     <application
-        android:name="GlobalState"
+        android:name=".GlobalState"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -29,7 +30,7 @@
             android:value="com.tpgrade.models" />
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".DemoActivity"
             android:label="@string/home_title"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -39,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeActivity"
             android:label="@string/title_activity_main" />
         <activity
             android:name=".MarkActivity"
@@ -75,6 +76,7 @@
             android:name=".ContestStatisticActivity"
             android:label="@string/contest_nav_statistic"
             android:parentActivityName=".ContestActivity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

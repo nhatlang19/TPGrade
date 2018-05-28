@@ -31,7 +31,7 @@ public class ContestInfoActivity extends AppCompatActivity {
         TextView tvInfoMinScore = (TextView) findViewById(R.id.tvInfoMinScore);
         TextView tvInfoMaxScore = (TextView) findViewById(R.id.tvInfoMaxScore);
 
-        Topic topic = Topic.findById(Topic.class, 0);
+        Topic topic = Topic.findById(Topic.class, currentTopicId);
 
         if (topic != null) {
             tvInfoTestName.setText(topic.testName);
