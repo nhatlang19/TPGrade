@@ -9,6 +9,12 @@
     <uses-feature android:name="android.hardware.camera2" />
     <uses-feature android:name="android.hardware.camera2.autofocus" android:required="false"/>
 
+    <supports-screens android:resizeable="true"
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:anyDensity="true" />
+
     <application
         android:name=".GlobalState"
         android:allowBackup="true"
@@ -31,6 +37,7 @@
 
         <activity
             android:name=".DemoActivity"
+            android:screenOrientation="portrait"
             android:label="@string/home_title"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

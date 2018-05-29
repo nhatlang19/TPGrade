@@ -22,16 +22,16 @@ INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidMani
 		INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml
 		INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml
 uses-sdk
-ADDED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:5-73
-INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:5-73
-INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:5-73
-INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:5-73
-INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:5-73
+ADDED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:5-74
+INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:5-74
+INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:5-74
+INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:5-74
+INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:5-74
 	android:targetSdkVersion
-		ADDED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:41-70
+		ADDED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:42-71
 		INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml
 		INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		ADDED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:15-40
+		ADDED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml:7:15-41
 		INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml
 		INJECTED from D:\android_workspace\TPGrade\openCVLibrary341\src\main\AndroidManifest.xml
