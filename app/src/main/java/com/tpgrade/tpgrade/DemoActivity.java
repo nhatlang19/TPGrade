@@ -22,6 +22,8 @@ import org.opencv.imgproc.Imgproc;
 
 public class DemoActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
+
+
     private Puzzle15Processor mPuzzle15;
     private int                  mGameWidth;
     private int                  mGameHeight;
@@ -41,6 +43,8 @@ public class DemoActivity extends AppCompatActivity implements CameraBridgeViewB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.cameraViewer);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);

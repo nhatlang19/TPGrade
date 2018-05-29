@@ -36,8 +36,7 @@
             android:value="com.tpgrade.models" />
 
         <activity
-            android:name=".DemoActivity"
-            android:screenOrientation="portrait"
+            android:name=".HomeActivity"
             android:label="@string/home_title"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -46,12 +45,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".HomeActivity"
-            android:label="@string/title_activity_main" />
-        <activity
-            android:name=".MarkActivity"
-            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".HomeActivity" />
@@ -83,7 +76,7 @@
             android:name=".ContestStatisticActivity"
             android:label="@string/contest_nav_statistic"
             android:parentActivityName=".ContestActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".DemoActivity"></activity>
     </application>
 
 </manifest>
