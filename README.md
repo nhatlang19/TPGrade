@@ -1,0 +1,1 @@
+https://github.com/googlesamples/android-Camera2Basic/blob/241c6fac8113ddb5dffb4f349b5bb9f1bea93501/Application/src/main/java/com/example/android/camera2basic/Camera2BasicFragment.java
