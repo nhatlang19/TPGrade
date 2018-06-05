@@ -1,6 +1,5 @@
-package com.tpgrade.Lib.Sdk.Detector.Helper;
+package com.tpgrade.tpgrade.Processors.Detect.Conners;
 
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
@@ -16,6 +15,7 @@ import java.util.List;
 
 public class DetectRectangle {
 
+    private int id;
     private Mat dst;
     private Mat gray;
 
@@ -24,7 +24,8 @@ public class DetectRectangle {
 
     private int threshold;
 
-    public DetectRectangle(Mat dst, Mat gray) {
+    public DetectRectangle(int id, Mat dst, Mat gray) {
+        this.id = id;
         this.dst = dst;
         this.gray = gray;
 
@@ -40,6 +41,14 @@ public class DetectRectangle {
 
         //initialize treshold
         threshold = 100;
+    }
+
+    private static double angle(Point pt1, Point pt2, Point pt0) {
+        double dx1 = pt1.x - pt0.x;
+        double dy1 = pt1.y - pt0.y;
+        double dx2 = pt2.x - pt0.x;
+        double dy2 = pt2.y - pt0.y;
+        return (dx1 * dx2 + dy1 * dy2) / Math.sqrt((dx1 * dx1 + dy1 * dy1) * (dx2 * dx2 + dy2 * dy2) + 1e-10);
     }
 
     public synchronized Mat detect() {
@@ -86,7 +95,7 @@ public class DetectRectangle {
                 double maxcos = cos.get(cos.size() - 1);
 
                 if (numberVertices == 4 && mincos >= -0.1 && maxcos <= 0.3) {
-                    setLabel(dst, "X", cnt);
+                    drawRect(dst, cnt);
                 }
 
             }
@@ -95,22 +104,10 @@ public class DetectRectangle {
         return dst;
     }
 
-    private static double angle(Point pt1, Point pt2, Point pt0) {
-        double dx1 = pt1.x - pt0.x;
-        double dy1 = pt1.y - pt0.y;
-        double dx2 = pt2.x - pt0.x;
-        double dy2 = pt2.y - pt0.y;
-        return (dx1 * dx2 + dy1 * dy2) / Math.sqrt((dx1 * dx1 + dy1 * dy1) * (dx2 * dx2 + dy2 * dy2) + 1e-10);
-    }
+    private void drawRect(Mat im, MatOfPoint contour) {
+        Rect rect = Imgproc.boundingRect(contour);
 
-    private void setLabel(Mat im, String label, MatOfPoint contour) {
-        int fontface = Core.FONT_HERSHEY_SIMPLEX;
-        double scale = 3;//0.4;
-        int thickness = 3;//1;
-        int[] baseline = new int[1];
-        Size text = Imgproc.getTextSize(label, fontface, scale, thickness, baseline);
-        Rect r = Imgproc.boundingRect(contour);
-        Point pt = new Point(r.x + ((r.width - text.width) / 2), r.y + ((r.height + text.height) / 2));
-        Imgproc.putText(im, label, pt, fontface, scale, new Scalar(255, 0, 0), thickness);
+        int thickness = 2;//1;
+        Imgproc.rectangle(im, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(255, 0, 0), thickness);
     }
 }

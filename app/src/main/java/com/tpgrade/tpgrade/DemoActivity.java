@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.tpgrade.tpgrade.Processors.Puzzle15Processor;
+import com.tpgrade.tpgrade.Processors.RectangleProcessor;
+import com.tpgrade.tpgrade.Processors.RectangleTemplate.TemplateFactory;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -22,11 +22,7 @@ import org.opencv.imgproc.Imgproc;
 
 public class DemoActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
-
-
-    private Puzzle15Processor mPuzzle15;
-    private int                  mGameWidth;
-    private int                  mGameHeight;
+    private RectangleProcessor rectProcessor;
 
     //view holder
     CameraBridgeViewBase cameraBridgeViewBase;
@@ -66,7 +62,7 @@ public class DemoActivity extends AppCompatActivity implements CameraBridgeViewB
             }
         };
 
-        mPuzzle15 = new Puzzle15Processor();
+        rectProcessor = new RectangleProcessor(TemplateFactory.factory(50));
     }
 
     @Override
@@ -75,9 +71,7 @@ public class DemoActivity extends AppCompatActivity implements CameraBridgeViewB
         mRgbaF = new Mat(height, width, CvType.CV_8UC4);
         mRgbaT = new Mat(width, width, CvType.CV_8UC4);
 
-        mGameWidth = width;
-        mGameHeight = height;
-        mPuzzle15.prepareGameSize(width, height);
+        rectProcessor.prepareData(width, height);
     }
 
     @Override
@@ -101,7 +95,7 @@ public class DemoActivity extends AppCompatActivity implements CameraBridgeViewB
         Imgproc.resize(mRgbaT, mRgbaF, mRgbaF.size(), 0,0, 0);
         Core.flip(mRgbaF, gray, 1 );
 
-        return mPuzzle15.puzzleFrame(mRgba, gray);
+        return rectProcessor.puzzleFrame(mRgba, gray);
     }
 
     @Override

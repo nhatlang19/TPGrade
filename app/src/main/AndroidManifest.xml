@@ -36,8 +36,9 @@
             android:value="com.tpgrade.models" />
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".DemoActivity"
             android:label="@string/home_title"
+            android:configChanges="keyboardHidden|orientation"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -76,7 +77,7 @@
             android:name=".ContestStatisticActivity"
             android:label="@string/contest_nav_statistic"
             android:parentActivityName=".ContestActivity" />
-        <activity android:name=".DemoActivity"></activity>
+        <activity android:name=".HomeActivity"></activity>
     </application>
 
 </manifest>

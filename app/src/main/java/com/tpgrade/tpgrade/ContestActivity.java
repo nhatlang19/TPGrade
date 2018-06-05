@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.tpgrade.contants.ContantContest;
-import com.tpgrade.models.Topic;
 import com.tpgrade.tpgrade.Adapters.ContestItemAdapter;
 
 import java.util.ArrayList;
@@ -16,12 +15,11 @@ public class ContestActivity extends AppCompatActivity {
 
     RecyclerView contest;
     ContestItemAdapter contestItemAdapter;
+    private long currentTopicId;
 
     public long getCurrentTopicId() {
         return currentTopicId;
     }
-
-    private long currentTopicId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
