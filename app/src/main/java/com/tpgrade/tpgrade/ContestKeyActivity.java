@@ -42,7 +42,7 @@ public class ContestKeyActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.contest_key_menu__camera) {
-            Intent intent = new Intent(this, DemoActivity.class);
+            Intent intent = new Intent(this, ContestKeyCameraActivity.class);
             startActivityForResult(intent, ContantContest.REQUEST_CODE__CAMERA);
 
             return true;

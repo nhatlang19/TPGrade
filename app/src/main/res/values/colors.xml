@@ -3,4 +3,8 @@
     <color name="colorPrimary">#4B2288</color>
     <color name="colorPrimaryDark">#401D75</color>
     <color name="colorAccent">#919191</color>
+
+    <color name="colorScrollbar">#4B2288</color>
+    <color name="colorTitle">#4B2288</color>
+    <color name="colorShapeCircle">#4B2288</color>
 </resources>

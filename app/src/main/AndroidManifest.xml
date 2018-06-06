@@ -77,7 +77,8 @@
             android:name=".ContestStatisticActivity"
             android:label="@string/contest_nav_statistic"
             android:parentActivityName=".ContestActivity" />
-        <activity android:name=".DemoActivity"></activity>
+        <activity android:name=".ContestKeyCameraActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen"></activity>
     </application>
 
 </manifest>

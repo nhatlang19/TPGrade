@@ -21,7 +21,7 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-public class DemoActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2, ActivityInitialInterface {
+public class ContestKeyCameraActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2, ActivityInitialInterface {
 
     //view holder
     CameraBridgeViewBase cameraBridgeViewBase;
@@ -36,7 +36,7 @@ public class DemoActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
+        setContentView(R.layout.activity_contest_key_camera);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
