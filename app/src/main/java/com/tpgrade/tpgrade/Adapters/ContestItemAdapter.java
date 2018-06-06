@@ -1,5 +1,6 @@
 package com.tpgrade.tpgrade.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -18,6 +19,7 @@ import com.tpgrade.tpgrade.ContestKeyActivity;
 import com.tpgrade.tpgrade.ContestReviewActivity;
 import com.tpgrade.tpgrade.ContestScanActivity;
 import com.tpgrade.tpgrade.ContestStatisticActivity;
+import com.tpgrade.tpgrade.GlobalState;
 import com.tpgrade.tpgrade.R;
 
 import java.util.List;
@@ -29,6 +31,11 @@ public class ContestItemAdapter extends RecyclerView.Adapter<ContestItemAdapter.
 
     public ContestItemAdapter(List<ContestItem> items) {
         this.items = items;
+    }
+
+    public ContestItemAdapter(Context context, List<ContestItem> items) {
+        this.items = items;
+        this.context = context;
     }
 
     public void setContext(Context context) {
@@ -69,11 +76,9 @@ public class ContestItemAdapter extends RecyclerView.Adapter<ContestItemAdapter.
                         break;
                     case "information":
                         intent = new Intent(context, ContestInfoActivity.class);
-
                         break;
                 }
                 ContestActivity activity = (ContestActivity) view.getContext();
-                intent.putExtra(ContantContest.CONTEST_KEY__TOPIC_ID, activity.getCurrentTopicId());
                 context.startActivity(intent);
             }
         });

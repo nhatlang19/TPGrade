@@ -15,18 +15,18 @@ public class ContestActivity extends AppCompatActivity {
 
     RecyclerView contest;
     ContestItemAdapter contestItemAdapter;
-    private long currentTopicId;
-
-    public long getCurrentTopicId() {
-        return currentTopicId;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contest);
 
-        currentTopicId = getIntent().getLongExtra(ContantContest.CONTEST_KEY__TOPIC_ID, 0);
+        GlobalState global = (GlobalState) getApplication();
+
+        if (global.getSelectedTopicId() == 0) {
+            long currentTopicId = getIntent().getLongExtra(ContantContest.CONTEST_KEY__TOPIC_ID, 0);
+            global.setSelectedTopicId(currentTopicId);
+        }
 
         setUpRecycleView();
     }
@@ -42,10 +42,8 @@ public class ContestActivity extends AppCompatActivity {
         arrayData.add(new ContestItemAdapter.ContestItem(getDrawable(R.drawable.ic_equalizer_white_24dp), getString(R.string.contest_nav_statistic), "statistic"));
         arrayData.add(new ContestItemAdapter.ContestItem(getDrawable(R.drawable.ic_info_white_24dp), getString(R.string.contest_nav_info), "information"));
 
-
-        contestItemAdapter = new ContestItemAdapter(arrayData);
-
-        contestItemAdapter.setContext(this);
+        contestItemAdapter = new ContestItemAdapter(this, arrayData);
         contest.setAdapter(contestItemAdapter);
     }
+
 }

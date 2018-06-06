@@ -6,7 +6,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tpgrade.Lib.DateUtils;
-import com.tpgrade.contants.ContantContest;
 import com.tpgrade.models.Topic;
 
 public class ContestInfoActivity extends AppCompatActivity {
@@ -18,7 +17,8 @@ public class ContestInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contest_info);
 
-        currentTopicId = getIntent().getLongExtra(ContantContest.CONTEST_KEY__TOPIC_ID, 0);
+        GlobalState global = (GlobalState) getApplication();
+        currentTopicId = global.getSelectedTopicId();
 
         TextView tvInfoTestName = (TextView) findViewById(R.id.tvInfoTestName);
         TextView tvInfoTypePaper = (TextView) findViewById(R.id.tvInfoTypePaper);

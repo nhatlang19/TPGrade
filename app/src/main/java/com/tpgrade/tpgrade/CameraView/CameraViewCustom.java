@@ -1,16 +1,16 @@
 package com.tpgrade.tpgrade.CameraView;
 
-import java.io.FileOutputStream;
-import java.util.List;
-
-import org.opencv.android.JavaCameraView;
-
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.Size;
 import android.util.AttributeSet;
 import android.util.Log;
+
+import org.opencv.android.JavaCameraView;
+
+import java.io.FileOutputStream;
+import java.util.List;
 
 public class CameraViewCustom extends JavaCameraView implements PictureCallback {
 
@@ -43,15 +43,15 @@ public class CameraViewCustom extends JavaCameraView implements PictureCallback 
         return mCamera.getParameters().getSupportedPreviewSizes();
     }
 
+    public Size getResolution() {
+        return mCamera.getParameters().getPreviewSize();
+    }
+
     public void setResolution(Size resolution) {
         disconnectCamera();
         mMaxHeight = resolution.height;
         mMaxWidth = resolution.width;
         connectCamera(getWidth(), getHeight());
-    }
-
-    public Size getResolution() {
-        return mCamera.getParameters().getPreviewSize();
     }
 
     public void takePicture(final String fileName) {

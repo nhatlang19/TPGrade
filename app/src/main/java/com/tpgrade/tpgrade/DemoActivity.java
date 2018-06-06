@@ -1,12 +1,13 @@
 package com.tpgrade.tpgrade;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.tpgrade.tpgrade.Fragments.Permission.RequestPermissionFragment;
 import com.tpgrade.tpgrade.Processors.RectangleProcessor;
 import com.tpgrade.tpgrade.Processors.RectangleTemplate.TemplateFactory;
 
@@ -20,20 +21,17 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-public class DemoActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
-
-    private RectangleProcessor rectProcessor;
+public class DemoActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2, ActivityInitialInterface {
 
     //view holder
     CameraBridgeViewBase cameraBridgeViewBase;
-
     //camera listener callback
     BaseLoaderCallback baseLoaderCallback;
-
     // These variables are used (at the moment) to fix camera orientation from 270degree to 0degree
     Mat mRgba;
     Mat mRgbaF;
     Mat mRgbaT;
+    private RectangleProcessor rectProcessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +40,11 @@ public class DemoActivity extends AppCompatActivity implements CameraBridgeViewB
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        getFragmentManager().beginTransaction().add(new RequestPermissionFragment(), "RequestPermissionFragment").commit();
+    }
+
+    @Override
+    public void initial() {
         cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.cameraViewer);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
@@ -61,7 +64,6 @@ public class DemoActivity extends AppCompatActivity implements CameraBridgeViewB
                 }
             }
         };
-
         rectProcessor = new RectangleProcessor(TemplateFactory.factory(50));
     }
 
@@ -87,13 +89,13 @@ public class DemoActivity extends AppCompatActivity implements CameraBridgeViewB
         mRgba = inputFrame.rgba();
         // Rotate mRgba 90 degrees
         Core.transpose(mRgba, mRgbaT);
-        Imgproc.resize(mRgbaT, mRgbaF, mRgbaF.size(), 0,0, 0);
-        Core.flip(mRgbaF, mRgba, 1 );
+        Imgproc.resize(mRgbaT, mRgbaF, mRgbaF.size(), 0, 0, 0);
+        Core.flip(mRgbaF, mRgba, 1);
 
         // Rotate mRgba 90 degrees
         Core.transpose(gray, mRgbaT);
-        Imgproc.resize(mRgbaT, mRgbaF, mRgbaF.size(), 0,0, 0);
-        Core.flip(mRgbaF, gray, 1 );
+        Imgproc.resize(mRgbaT, mRgbaF, mRgbaF.size(), 0, 0, 0);
+        Core.flip(mRgbaF, gray, 1);
 
         return rectProcessor.puzzleFrame(mRgba, gray);
     }

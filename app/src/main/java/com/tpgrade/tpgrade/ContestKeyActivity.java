@@ -20,7 +20,8 @@ public class ContestKeyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contest_key);
 
-        currentTopicId = getIntent().getLongExtra(ContantContest.CONTEST_KEY__TOPIC_ID, 0);
+        GlobalState global = (GlobalState) getApplication();
+        currentTopicId = global.getSelectedTopicId();
 
         topic = Topic.findById(Topic.class, currentTopicId);
     }

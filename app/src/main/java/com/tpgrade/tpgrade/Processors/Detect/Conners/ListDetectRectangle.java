@@ -15,7 +15,7 @@ public class ListDetectRectangle {
     }
 
     public void detect() {
-        for(DetectRectangle rectangle : list) {
+        for (DetectRectangle rectangle : list) {
             rectangle.detect();
         }
     }

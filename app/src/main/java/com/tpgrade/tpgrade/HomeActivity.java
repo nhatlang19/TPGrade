@@ -20,24 +20,21 @@ import com.tpgrade.models.Topic;
 import com.tpgrade.tpgrade.Adapters.TopicAdapter;
 import com.tpgrade.tpgrade.Fragments.Home.CreateNewDialogFragment;
 import com.tpgrade.tpgrade.Fragments.Home.EditTopicDialogFragment;
+import com.tpgrade.tpgrade.Fragments.Permission.RequestPermissionFragment;
 
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         CreateNewDialogFragment.CreateTopicDialogListener,
-        EditTopicDialogFragment.EditTopicDialogListener {
+        EditTopicDialogFragment.EditTopicDialogListener, ActivityInitialInterface {
 
     RecyclerView lvTopicList;
     TopicAdapter topicAdapter;
+    Toolbar toolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+    public void initial() {
         setUpRecycleView();
 
         FloatingActionButton btnAdd = (FloatingActionButton) findViewById(R.id.btn_add);
@@ -58,6 +55,15 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getFragmentManager().beginTransaction().add(new RequestPermissionFragment(), "RequestPermissionFragment").commit();
     }
 
     private void setUpRecycleView() {
