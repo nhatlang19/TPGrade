@@ -2,6 +2,7 @@ package com.tpgrade.tpgrade;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -119,24 +120,54 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_setting) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            this.openSetting();
         } else if (id == R.id.nav_answer_sheet) {
 
         } else if (id == R.id.nav_guide) {
 
         } else if (id == R.id.nav_about) {
-            Intent intent = new Intent(this, AboutActivity.class);
-            startActivity(intent);
+            this.openAboutUs();
         } else if (id == R.id.nav_share) {
-
+            this.share();
         } else if (id == R.id.nav_send) {
-
+            this.contact();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void contact() {
+        String[] TO = {""};
+        String[] CC = {""};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        emailIntent.putExtra(Intent.EXTRA_CC, CC);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+        startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+    }
+
+    private void share() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.home_share__message));
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
+    private void openSetting() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openAboutUs() {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
 
     @Override

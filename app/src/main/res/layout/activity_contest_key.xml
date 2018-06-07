@@ -5,4 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".ContestKeyActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lv_key_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:scrollbarThumbVertical="@color/colorScrollbar"
+        android:scrollbars="vertical" />
+
 </android.support.constraint.ConstraintLayout>

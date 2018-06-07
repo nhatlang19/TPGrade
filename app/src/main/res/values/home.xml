@@ -7,6 +7,8 @@
     <string name="home_nav_answer_sheet">Giấy thi</string>
     <string name="home_nav_guide">Hướng dẫn</string>
     <string name="home_nav_about">Giới thiệu</string>
+    <string name="home_nav_share">Chia sẻ</string>
+    <string name="home_nav_contact">Liên hệ</string>
 
     <string name="home_menu__remove_all">Xóa hết</string>
 
@@ -27,4 +29,6 @@
     <string name="home_message__fail">Không thể tạo</string>
     <string name="home_message__delete">Xóa?</string>
     <string name="home_message__delete_answer">Uhm, Xóa</string>
+
+    <string name="home_share__message">This is my text to send.</string>
 </resources>

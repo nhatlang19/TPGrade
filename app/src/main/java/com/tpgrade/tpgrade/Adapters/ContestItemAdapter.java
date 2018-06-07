@@ -1,6 +1,5 @@
 package com.tpgrade.tpgrade.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -12,14 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tpgrade.contants.ContantContest;
 import com.tpgrade.tpgrade.ContestActivity;
 import com.tpgrade.tpgrade.ContestInfoActivity;
 import com.tpgrade.tpgrade.ContestKeyActivity;
 import com.tpgrade.tpgrade.ContestReviewActivity;
 import com.tpgrade.tpgrade.ContestScanActivity;
 import com.tpgrade.tpgrade.ContestStatisticActivity;
-import com.tpgrade.tpgrade.GlobalState;
 import com.tpgrade.tpgrade.R;
 
 import java.util.List;
