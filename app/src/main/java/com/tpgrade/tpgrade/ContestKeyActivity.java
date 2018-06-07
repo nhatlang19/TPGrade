@@ -3,17 +3,26 @@ package com.tpgrade.tpgrade;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.tpgrade.contants.ContantContest;
 import com.tpgrade.models.Topic;
+import com.tpgrade.tpgrade.Adapters.ContestKeyItemAdapter;
+import com.tpgrade.tpgrade.Adapters.TopicAdapter;
+
+import java.util.List;
 
 public class ContestKeyActivity extends AppCompatActivity {
 
     private long currentTopicId;
 
     private Topic topic;
+
+    RecyclerView lvKeyList;
+    ContestKeyItemAdapter keyItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +33,18 @@ public class ContestKeyActivity extends AppCompatActivity {
         currentTopicId = global.getSelectedTopicId();
 
         topic = Topic.findById(Topic.class, currentTopicId);
+
+        this.setUpRecycleView();
+    }
+
+    private void setUpRecycleView() {
+        lvKeyList = (RecyclerView) findViewById(R.id.lv_key_list);
+        lvKeyList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        List<Topic> arrayOfItems = Topic.listAll(Topic.class, "created DESC");
+        keyItemAdapter = new ContestKeyItemAdapter(arrayOfItems);
+        keyItemAdapter.setContext(this);
+        lvKeyList.setAdapter(keyItemAdapter);
     }
 
     @Override

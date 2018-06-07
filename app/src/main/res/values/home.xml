@@ -31,4 +31,8 @@
     <string name="home_message__delete_answer">Uhm, Xóa</string>
 
     <string name="home_share__message">This is my text to send.</string>
+
+    <string name="home_contact__email">nhocvui1220@gmail.com</string>
+    <string name="home_contact__subject">Feedback</string>
+    <string name="home_contact__body">Send your opinions to make our app better than</string>
 </resources>

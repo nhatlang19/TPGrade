@@ -8,6 +8,7 @@ import java.util.List;
 
 public class User extends SugarRecord {
     private String info;
+    private String answerImage;
     public Date created;
     public List<UserAnswer> answers;
 
@@ -16,8 +17,9 @@ public class User extends SugarRecord {
         this.answers = new ArrayList<>();
     }
 
-    public User(String info) {
+    public User(String info, String answerImage) {
         this.info = info;
+        this.answerImage = answerImage;
         this.created = new Date();
         this.answers = new ArrayList<>();
     }
