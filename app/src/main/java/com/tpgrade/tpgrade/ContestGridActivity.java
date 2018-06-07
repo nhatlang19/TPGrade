@@ -1,5 +1,7 @@
 package com.tpgrade.tpgrade;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,6 +18,8 @@ import java.util.List;
 public class ContestGridActivity extends AppCompatActivity {
 
     GridView gvContest;
+
+    Context context = this;
 
 
     @Override
@@ -39,13 +43,6 @@ public class ContestGridActivity extends AppCompatActivity {
         List<ContestGridItemAdapter.ContestItem> allItems = getAllItemObject();
         ContestGridItemAdapter customAdapter = new ContestGridItemAdapter(ContestGridActivity.this, allItems);
         gvContest.setAdapter(customAdapter);
-
-        gvContest.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ContestGridActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private List<ContestGridItemAdapter.ContestItem> getAllItemObject() {

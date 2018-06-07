@@ -4,9 +4,11 @@
     android:id="@+id/cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_columnWeight="1"
     android:layout_marginLeft="18dp"
     android:layout_marginRight="18dp"
     android:layout_marginTop="8dp"
+    android:layout_rowWeight="1"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -19,7 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="50dp">
+        android:paddingBottom="30dp"
+        android:paddingTop="30dp">
 
         <ImageView
             android:id="@+id/ivIcon"
