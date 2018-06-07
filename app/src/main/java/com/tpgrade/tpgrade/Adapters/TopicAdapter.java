@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.tpgrade.Lib.DateUtils;
 import com.tpgrade.contants.ContantContest;
 import com.tpgrade.models.Topic;
-import com.tpgrade.tpgrade.ContestActivity;
 import com.tpgrade.tpgrade.ContestGridActivity;
 import com.tpgrade.tpgrade.Fragments.Home.EditTopicDialogFragment;
 import com.tpgrade.tpgrade.HomeActivity;

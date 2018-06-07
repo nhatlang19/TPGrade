@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,8 +15,6 @@ import com.tpgrade.Lib.DateUtils;
 import com.tpgrade.contants.ContantContest;
 import com.tpgrade.models.Topic;
 import com.tpgrade.tpgrade.ContestActivity;
-import com.tpgrade.tpgrade.Fragments.Home.EditTopicDialogFragment;
-import com.tpgrade.tpgrade.HomeActivity;
 import com.tpgrade.tpgrade.R;
 
 import java.util.List;

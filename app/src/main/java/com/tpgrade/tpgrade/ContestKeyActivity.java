@@ -11,18 +11,15 @@ import android.view.MenuItem;
 import com.tpgrade.contants.ContantContest;
 import com.tpgrade.models.Topic;
 import com.tpgrade.tpgrade.Adapters.ContestKeyItemAdapter;
-import com.tpgrade.tpgrade.Adapters.TopicAdapter;
 
 import java.util.List;
 
 public class ContestKeyActivity extends AppCompatActivity {
 
-    private long currentTopicId;
-
-    private Topic topic;
-
     RecyclerView lvKeyList;
     ContestKeyItemAdapter keyItemAdapter;
+    private long currentTopicId;
+    private Topic topic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

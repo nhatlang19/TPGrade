@@ -1,9 +1,7 @@
 package com.tpgrade.tpgrade.Adapters;
 
-import android.graphics.drawable.Drawable;
-
-
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,7 @@ import com.tpgrade.tpgrade.R;
 
 import java.util.List;
 
-public class ContestGridItemAdapter  extends BaseAdapter {
+public class ContestGridItemAdapter extends BaseAdapter {
 
     private LayoutInflater layoutinflater;
     private List<ContestItem> listStorage;
@@ -24,7 +22,7 @@ public class ContestGridItemAdapter  extends BaseAdapter {
 
     public ContestGridItemAdapter(Context context, List<ContestItem> customizedListView) {
         this.context = context;
-        layoutinflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutinflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         listStorage = customizedListView;
     }
 
@@ -47,7 +45,7 @@ public class ContestGridItemAdapter  extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder listViewHolder;
-        if(convertView == null){
+        if (convertView == null) {
             listViewHolder = new ViewHolder();
             convertView = layoutinflater.inflate(R.layout.contest_grid_item, parent, false);
             listViewHolder.ivIcon = (ImageView) convertView.findViewById(R.id.ivIcon);
@@ -55,7 +53,7 @@ public class ContestGridItemAdapter  extends BaseAdapter {
             listViewHolder.cv = (CardView) convertView.findViewById(R.id.cv);
             convertView.setTag(listViewHolder);
         } else {
-            listViewHolder = (ViewHolder)convertView.getTag();
+            listViewHolder = (ViewHolder) convertView.getTag();
         }
 
         ContestItem item = listStorage.get(position);
@@ -66,7 +64,7 @@ public class ContestGridItemAdapter  extends BaseAdapter {
         return convertView;
     }
 
-    static class ViewHolder{
+    static class ViewHolder {
         CardView cv;
         String key;
         TextView tvName;

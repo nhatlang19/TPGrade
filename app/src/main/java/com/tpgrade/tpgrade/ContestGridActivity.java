@@ -48,7 +48,7 @@ public class ContestGridActivity extends AppCompatActivity {
         });
     }
 
-    private List<ContestGridItemAdapter.ContestItem> getAllItemObject(){
+    private List<ContestGridItemAdapter.ContestItem> getAllItemObject() {
         List<ContestGridItemAdapter.ContestItem> arrayData = new ArrayList<>();
         arrayData.add(new ContestGridItemAdapter.ContestItem(getDrawable(R.drawable.ic_vpn_key_white_24dp), getString(R.string.contest_nav_key), "key"));
         arrayData.add(new ContestGridItemAdapter.ContestItem(getDrawable(R.drawable.ic_search_white_24dp), getString(R.string.contest_nav_scan), "scan"));

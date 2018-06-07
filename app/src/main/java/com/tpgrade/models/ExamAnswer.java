@@ -1,12 +1,13 @@
 package com.tpgrade.models;
 
 import com.orm.SugarRecord;
+
 import java.util.Date;
 
 public class ExamAnswer extends SugarRecord {
     public Exam exam;
-    private int answer;
     public Date created;
+    private int answer;
 
     // Default constructor is necessary for SugarRecord
     public ExamAnswer() {

@@ -7,10 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 public class User extends SugarRecord {
-    private String info;
-    private String answerImage;
     public Date created;
     public List<UserAnswer> answers;
+    private String info;
+    private String answerImage;
 
     // Default constructor is necessary for SugarRecord
     public User() {
