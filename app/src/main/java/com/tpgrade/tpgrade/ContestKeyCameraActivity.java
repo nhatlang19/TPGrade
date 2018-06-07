@@ -16,8 +16,10 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 public class ContestKeyCameraActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2, ActivityInitialInterface {
 
@@ -87,7 +89,7 @@ public class ContestKeyCameraActivity extends AppCompatActivity implements Camer
 //        return dst;
 
         mRgba = inputFrame.rgba();
-//        // Rotate mRgba 90 degrees
+        // Rotate mRgba 90 degrees
 //        Core.transpose(mRgba, mRgbaT);
 //        Imgproc.resize(mRgbaT, mRgbaF, mRgbaF.size(), 0, 0, 0);
 //        Core.flip(mRgbaF, mRgba, 1);
@@ -96,7 +98,7 @@ public class ContestKeyCameraActivity extends AppCompatActivity implements Camer
 //        Core.transpose(gray, mRgbaT);
 //        Imgproc.resize(mRgbaT, mRgbaF, mRgbaF.size(), 0, 0, 0);
 //        Core.flip(mRgbaF, gray, 1);
-//
+
         return rectProcessor.puzzleFrame(mRgba, gray);
     }
 
