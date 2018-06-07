@@ -16,6 +16,7 @@ import com.tpgrade.Lib.DateUtils;
 import com.tpgrade.contants.ContantContest;
 import com.tpgrade.models.Topic;
 import com.tpgrade.tpgrade.ContestActivity;
+import com.tpgrade.tpgrade.ContestGridActivity;
 import com.tpgrade.tpgrade.Fragments.Home.EditTopicDialogFragment;
 import com.tpgrade.tpgrade.HomeActivity;
 import com.tpgrade.tpgrade.R;
@@ -80,7 +81,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ContestActivity.class);
+                //Intent intent = new Intent(context, ContestActivity.class);
+                Intent intent = new Intent(context, ContestGridActivity.class);
                 intent.putExtra(ContantContest.CONTEST_KEY__TOPIC_ID, topic.getId());
                 context.startActivity(intent);
             }

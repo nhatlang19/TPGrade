@@ -7,13 +7,16 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera2" />
-    <uses-feature android:name="android.hardware.camera2.autofocus" android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.camera2.autofocus"
+        android:required="false" />
 
-    <supports-screens android:resizeable="true"
-        android:smallScreens="true"
-        android:normalScreens="true"
+    <supports-screens
+        android:anyDensity="true"
         android:largeScreens="true"
-        android:anyDensity="true" />
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
 
     <application
         android:name=".GlobalState"
@@ -37,8 +40,8 @@
 
         <activity
             android:name=".HomeActivity"
-            android:label="@string/home_title"
             android:configChanges="keyboardHidden|orientation"
+            android:label="@string/home_title"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,9 +80,14 @@
             android:name=".ContestStatisticActivity"
             android:label="@string/contest_nav_statistic"
             android:parentActivityName=".ContestActivity" />
-        <activity android:name=".ContestKeyCameraActivity"
+        <activity
+            android:name=".ContestKeyCameraActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen"></activity>
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+        <activity
+            android:name=".ContestGridActivity"
+            android:label="@string/contest_title"
+            android:parentActivityName=".HomeActivity" />
     </application>
 
 </manifest>

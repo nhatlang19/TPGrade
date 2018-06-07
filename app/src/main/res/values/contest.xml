@@ -21,5 +21,7 @@
     <string name="contest_info__min_score">Điểm thấp nhất</string>
     <string name="contest_info__max_score">Điểm cao nhất</string>
 
+    <string name="contest_grid__item_default">...</string>
+
     <string name="contest_key_menu__camera">Camera</string>
 </resources>
