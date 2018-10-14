@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:title="@string/contest_key_menu__camera"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/contest_key_menu__add"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/contest_key_menu__add"
+        app:showAsAction="always" />
 </menu>

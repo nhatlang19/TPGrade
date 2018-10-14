@@ -14,7 +14,7 @@ public class ListDetectRectangle {
         list.add(rect);
     }
 
-    public void detect() {
+    public synchronized void detect() {
         for (DetectRectangle rectangle : list) {
             rectangle.detect();
         }

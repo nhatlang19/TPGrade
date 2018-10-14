@@ -88,6 +88,10 @@
             android:name=".ContestGridActivity"
             android:label="@string/contest_title"
             android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".ContestKeyAddActivity"
+            android:label="@string/contest_nav_key"
+            android:parentActivityName=".ContestKeyActivity" />
     </application>
 
 </manifest>

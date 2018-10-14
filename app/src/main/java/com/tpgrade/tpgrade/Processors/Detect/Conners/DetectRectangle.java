@@ -1,5 +1,9 @@
 package com.tpgrade.tpgrade.Processors.Detect.Conners;
 
+import android.widget.Toast;
+
+import com.tpgrade.tpgrade.GlobalState;
+
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
@@ -65,7 +69,6 @@ public class DetectRectangle {
 
         Imgproc.findContours(cIMG, contours, hovIMG, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
-
         for (MatOfPoint cnt : contours) {
 
             MatOfPoint2f curve = new MatOfPoint2f(cnt.toArray());
@@ -96,8 +99,15 @@ public class DetectRectangle {
 
                 if (numberVertices == 4 && mincos >= -0.1 && maxcos <= 0.3) {
                     drawRect(dst, cnt);
-                }
 
+                    if (GlobalState.updateRect(this.id, 1)) {
+                        System.out.println(this.id + ": Luan Here");
+                    }
+                } else {
+                    GlobalState.updateRect(this.id, 0);
+                }
+            } else {
+                GlobalState.updateRect(this.id, 0);
             }
         }
 
@@ -109,5 +119,17 @@ public class DetectRectangle {
 
         int thickness = 2;//1;
         Imgproc.rectangle(im, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(255, 0, 0), thickness);
+
+//        Bitmap bmp = null;
+//        try {
+//            bmp = Bitmap.createBitmap(dst.cols(), dst.rows(), Bitmap.Config.ARGB_8888);
+//            Utils.matToBitmap(dst, bmp);
+//            FileUtils.storePhotoOnDisk(bmp);
+//        }
+//        catch (CvException e){
+//            Log.d("Exception",e.getMessage());
+//        }
     }
+
+
 }

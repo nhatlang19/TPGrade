@@ -24,4 +24,5 @@
     <string name="contest_grid__item_default">...</string>
 
     <string name="contest_key_menu__camera">Camera</string>
+    <string name="contest_key_menu__add">Add</string>
 </resources>

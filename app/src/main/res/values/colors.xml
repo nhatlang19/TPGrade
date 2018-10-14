@@ -7,4 +7,36 @@
     <color name="colorScrollbar">#4B2288</color>
     <color name="colorTitle">#4B2288</color>
     <color name="colorShapeCircle">#4B2288</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#CC888888</color>
+    <color name="white_b88">#88FFFFFF</color>
+
+    <color name="colorbg_Red">#da5959</color>
+    <color name="colorRed">#e64545</color>
+    <color name="colorRedBG">#FFBBBB</color>
+    <color name="colorOrange">#fab480</color>
+    <color name="colorOrangeBG">#ffdfbb</color>
+    <color name="colorYellow">#dceb1e</color>
+    <color name="colorYellowBG">#ffffbb</color>
+    <color name="colorGreen">#6edc6e</color>
+    <color name="colorGreenBG">#bbffbd</color>
+    <color name="colorLightBlue">#50dcdc</color>
+    <color name="colorLightBlueBG">#bbfeff</color>
+    <color name="colorBlue">#8080ff</color>
+    <color name="colorBlueBG">#bbbeff</color>
+    <color name="colorPurple">#d580ff</color>
+    <color name="colorPurpleBG">#e8bbff</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="gray2">#9999aa</color>
+    <color name="black_blur">#88000000</color>
+    <color name="bg_blur">#88eeeeee</color>
+
+    <color name="dark">#4d5356</color>
+    <color name="light">#b8bdbc</color>
+
+    <color name="dark_HSV">#757872</color>
+    <color name="light_HSV">#d9d9d9</color>
+
 </resources>

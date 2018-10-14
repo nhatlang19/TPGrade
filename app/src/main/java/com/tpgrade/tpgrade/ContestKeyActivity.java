@@ -66,6 +66,12 @@ public class ContestKeyActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.contest_key_menu__add) {
+            Intent intent = new Intent(this, ContestKeyAddActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
