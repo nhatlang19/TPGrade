@@ -13,7 +13,8 @@ import android.widget.TextView;
 
 import com.tpgrade.Lib.DateUtils;
 import com.tpgrade.contants.ContantContest;
-import com.tpgrade.models.Topic;
+import com.tpgrade.models.Exam;
+import com.tpgrade.models.Exam;
 import com.tpgrade.tpgrade.ContestActivity;
 import com.tpgrade.tpgrade.R;
 
@@ -23,18 +24,18 @@ public class ContestKeyItemAdapter extends RecyclerView.Adapter<ContestKeyItemAd
 
     private Context context;
 
-    private List<Topic> topics;
+    private List<Exam> exams;
 
-    public ContestKeyItemAdapter(List<Topic> topics) {
-        this.topics = topics;
+    public ContestKeyItemAdapter(List<Exam> exams) {
+        this.exams = exams;
     }
 
     public void setContext(Context context) {
         this.context = context;
     }
 
-    public List<Topic> getTopics() {
-        return topics;
+    public List<Exam> getExams() {
+        return exams;
     }
 
     @Override
@@ -47,31 +48,22 @@ public class ContestKeyItemAdapter extends RecyclerView.Adapter<ContestKeyItemAd
 
     @Override
     public void onBindViewHolder(final ContestKeyViewHolder holder, final int position) {
-        final Topic topic = getTopics().get(position);
-        topic.position = position;
-        holder.topic = topic;
-        holder.tvTestName.setText(topic.testName);
-        holder.tvNumbers.setText("Số câu: " + topic.numbers);
-        holder.tvCreated.setText(DateUtils.formatCreated(topic.created));
+        final Exam Exam = getExams().get(position);
+
+        holder.Exam = Exam;
+        holder.tvTestName.setText("Mã đề: " + Exam.examTitle);
+        holder.tvCreated.setText(DateUtils.formatCreated(Exam.created));
 
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Topic dbTopic = Topic.findById(Topic.class, topic.getId());
-                dbTopic.delete();
-                topics.remove(position);
+                Exam dbExam = Exam.findById(Exam.class, Exam.getId());
+                dbExam.delete();
+                exams.remove(position);
                 notifyDataSetChanged();
             }
         });
 
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ContestActivity.class);
-                intent.putExtra(ContantContest.CONTEST_KEY__TOPIC_ID, topic.getId());
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -81,20 +73,20 @@ public class ContestKeyItemAdapter extends RecyclerView.Adapter<ContestKeyItemAd
 
     @Override
     public int getItemCount() {
-        return getTopics().size();
+        return getExams().size();
     }
 
     public void clear() {
-        getTopics().clear();
-        final int size = getTopics().size();
+        getExams().clear();
+        final int size = getExams().size();
         notifyItemRangeRemoved(0, size);
     }
 
-    public void insert(Topic topic, int position) {
-        getTopics().add(position, topic);
+    public void insert(Exam Exam, int position) {
+        getExams().add(position, Exam);
     }
 
-    public void update(Topic topic, int position) {
+    public void update(Exam Exam, int position) {
     }
 
     public static class ContestKeyViewHolder extends RecyclerView.ViewHolder {
@@ -108,7 +100,7 @@ public class ContestKeyItemAdapter extends RecyclerView.Adapter<ContestKeyItemAd
 
         LinearLayout btnRemove;
 
-        Topic topic;
+        Exam Exam;
 
         ContestKeyViewHolder(View itemView) {
             super(itemView);

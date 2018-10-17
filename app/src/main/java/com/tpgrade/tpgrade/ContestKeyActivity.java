@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.tpgrade.contants.ContantContest;
+import com.tpgrade.models.Exam;
 import com.tpgrade.models.Topic;
 import com.tpgrade.tpgrade.Adapters.ContestKeyItemAdapter;
 
@@ -38,7 +39,8 @@ public class ContestKeyActivity extends AppCompatActivity {
         lvKeyList = (RecyclerView) findViewById(R.id.lv_key_list);
         lvKeyList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        List<Topic> arrayOfItems = Topic.listAll(Topic.class, "created DESC");
+        List<Exam> arrayOfItems = Exam.find(Exam.class, "topic = ?", String.valueOf(topic.getId()));
+
         keyItemAdapter = new ContestKeyItemAdapter(arrayOfItems);
         keyItemAdapter.setContext(this);
         lvKeyList.setAdapter(keyItemAdapter);
@@ -68,7 +70,7 @@ public class ContestKeyActivity extends AppCompatActivity {
 
         if (id == R.id.contest_key_menu__add) {
             Intent intent = new Intent(this, ContestKeyAddActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, ContestKeyAddActivity.REQUEST_CODE__CONTEST_KEY_ADD);
             return true;
         }
 
@@ -86,6 +88,17 @@ public class ContestKeyActivity extends AppCompatActivity {
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.
 
+                // Do something with the contact here (bigger example below)
+            }
+        }
+
+        // Check which request we're responding to
+        if (requestCode == ContestKeyAddActivity.REQUEST_CODE__CONTEST_KEY_ADD) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                // The user picked a contact.
+                // The Intent's data Uri identifies which contact was selected.
+                keyItemAdapter.notifyDataSetChanged();
                 // Do something with the contact here (bigger example below)
             }
         }
