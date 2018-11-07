@@ -84,19 +84,7 @@ public class ContestKeyCameraActivity extends AppCompatActivity implements Camer
         Mat gray = inputFrame.gray();
         Mat dst = inputFrame.rgba();
 
-//        return dst;
-
         mRgba = inputFrame.rgba();
-        // Rotate mRgba 90 degrees
-//        Core.transpose(mRgba, mRgbaT);
-//        Imgproc.resize(mRgbaT, mRgbaF, mRgbaF.size(), 0, 0, 0);
-//        Core.flip(mRgbaF, mRgba, 1);
-//
-//        // Rotate mRgba 90 degrees
-//        Core.transpose(gray, mRgbaT);
-//        Imgproc.resize(mRgbaT, mRgbaF, mRgbaF.size(), 0, 0, 0);
-//        Core.flip(mRgbaF, gray, 1);
-
         return rectProcessor.puzzleFrame(mRgba, gray);
     }
 

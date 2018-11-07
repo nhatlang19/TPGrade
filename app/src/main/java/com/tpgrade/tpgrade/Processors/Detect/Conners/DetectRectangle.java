@@ -1,9 +1,13 @@
 package com.tpgrade.tpgrade.Processors.Detect.Conners;
 
-import android.widget.Toast;
+import android.graphics.Bitmap;
+import android.util.Log;
 
+import com.tpgrade.Lib.FileUtils;
 import com.tpgrade.tpgrade.GlobalState;
 
+import org.opencv.android.Utils;
+import org.opencv.core.CvException;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
@@ -19,16 +23,18 @@ import java.util.List;
 
 public class DetectRectangle {
 
-    private int id;
-    private Mat dst;
-    private Mat gray;
+    protected int id;
+    protected Mat dst;
+    protected Mat gray;
 
-    private Mat bwIMG, hsvIMG, lrrIMG, urrIMG, dsIMG, usIMG, cIMG, hovIMG;
-    private MatOfPoint2f approxCurve;
+    protected Mat bwIMG, hsvIMG, lrrIMG, urrIMG, dsIMG, usIMG, cIMG, hovIMG;
+    protected MatOfPoint2f approxCurve;
 
-    private int threshold;
+    protected int threshold;
 
-    public DetectRectangle(int id, Mat dst, Mat gray) {
+    protected List<Point[]> listPoints;
+
+    public DetectRectangle(int id, Mat dst, Mat gray, List<Point[]> listPoints) {
         this.id = id;
         this.dst = dst;
         this.gray = gray;
@@ -45,14 +51,38 @@ public class DetectRectangle {
 
         //initialize treshold
         threshold = 100;
+
+        this.listPoints = listPoints;
     }
 
-    private static double angle(Point pt1, Point pt2, Point pt0) {
+    protected static double angle(Point pt1, Point pt2, Point pt0) {
         double dx1 = pt1.x - pt0.x;
         double dy1 = pt1.y - pt0.y;
         double dx2 = pt2.x - pt0.x;
         double dy2 = pt2.y - pt0.y;
         return (dx1 * dx2 + dy1 * dy2) / Math.sqrt((dx1 * dx1 + dy1 * dy1) * (dx2 * dx2 + dy2 * dy2) + 1e-10);
+    }
+
+    protected static boolean areaValid(Point p1, Point p2, Point[] rPoints)
+    {
+        return rPoints[0].x <= p1.x && p1.x <= rPoints[1].x && rPoints[0].y <= p1.y && p1.y <= rPoints[1].y
+                && rPoints[0].x <= p2.x && p2.x <= rPoints[1].x && rPoints[0].y <= p2.y && p2.y <= rPoints[1].y;
+    }
+
+    protected static int areaAllow(Rect rect, List<Point[]> listPoints)
+    {
+        Point p1 = new Point(rect.x, rect.y);
+        Point p2 = new Point(rect.x + rect.width, rect.y + rect.height);
+
+        int index = 0;
+        for (Point[] rPoints : listPoints) {
+            if (areaValid(p1, p2, rPoints)) {
+                return index;
+            }
+            index += 1;
+        }
+
+        return -1;
     }
 
     public synchronized Mat detect() {
@@ -98,38 +128,57 @@ public class DetectRectangle {
                 double maxcos = cos.get(cos.size() - 1);
 
                 if (numberVertices == 4 && mincos >= -0.1 && maxcos <= 0.3) {
-                    drawRect(dst, cnt);
+                    Rect rect = Imgproc.boundingRect(cnt);
 
-                    if (GlobalState.updateRect(this.id, 1)) {
-                        System.out.println(this.id + ": Luan Here");
+                    int index = areaAllow(rect, this.listPoints);
+                    if (index != -1 && index < 4) {
+                        GlobalState.updateRect(index, 1, new Point(rect.x, rect.y));
+
+                        drawRect(dst, cnt);
+
+                        if (GlobalState.isValid()) {
+                            drawRectFromMatOfPoint(dst, GlobalState.getRectPoint());
+                        }
                     }
-                } else {
-                    GlobalState.updateRect(this.id, 0);
                 }
-            } else {
-                GlobalState.updateRect(this.id, 0);
             }
         }
 
         return dst;
     }
 
-    private void drawRect(Mat im, MatOfPoint contour) {
-        Rect rect = Imgproc.boundingRect(contour);
+    protected void drawRectFromMatOfPoint(Mat im, List<Point> rectPoint)
+    {
+        Point point0 = rectPoint.get(0);
+        Point point1 = rectPoint.get(1);
+        Point point2 = rectPoint.get(2);
+        Point point3 = rectPoint.get(3);
 
-        int thickness = 2;//1;
-        Imgproc.rectangle(im, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(255, 0, 0), thickness);
-
-//        Bitmap bmp = null;
-//        try {
-//            bmp = Bitmap.createBitmap(dst.cols(), dst.rows(), Bitmap.Config.ARGB_8888);
-//            Utils.matToBitmap(dst, bmp);
-//            FileUtils.storePhotoOnDisk(bmp);
-//        }
-//        catch (CvException e){
-//            Log.d("Exception",e.getMessage());
-//        }
+        int thickness = 1;//1;
+        Imgproc.rectangle(im, new Point(point0.x, point0.y), new Point(point1.x, point1.y), new Scalar(255, 0, 0), thickness);
+        Imgproc.rectangle(im, new Point(point1.x, point1.y), new Point(point2.x, point2.y), new Scalar(255, 0, 0), thickness);
+        Imgproc.rectangle(im, new Point(point2.x, point2.y), new Point(point3.x, point3.y), new Scalar(255, 0, 0), thickness);
+        Imgproc.rectangle(im, new Point(point3.x, point3.y), new Point(point0.x, point0.y), new Scalar(255, 0, 0), thickness);
     }
 
+    protected void drawRect(Mat im, MatOfPoint contour) {
+        Rect rect = Imgproc.boundingRect(contour);
+
+        int thickness = 3;//1;
+        Imgproc.rectangle(im, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(255, 0, 0), thickness);
+    }
+
+    protected void captureImage()
+    {
+        Bitmap bmp = null;
+        try {
+            bmp = Bitmap.createBitmap(dst.cols(), dst.rows(), Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(dst, bmp);
+            FileUtils.storePhotoOnDisk(bmp);
+        }
+        catch (CvException e){
+            Log.d("Exception",e.getMessage());
+        }
+    }
 
 }

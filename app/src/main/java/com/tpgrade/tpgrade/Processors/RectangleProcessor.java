@@ -11,6 +11,9 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
  * This class is a controller for puzzle game.
@@ -42,48 +45,13 @@ public class RectangleProcessor {
     public synchronized Mat puzzleFrame(Mat inputPicture, Mat inputPictureGray) {
         drawGrid(inputPicture);
 
-        ListDetectRectangle listDetectRectangle = new ListDetectRectangle();
-
-        Point p1, p2;
-
         Point[] r1Points = this.rectanglePoint.getR1Points();
-        p1 = r1Points[0];
-        p2 = r1Points[1];
-        Mat r0gt = inputPictureGray.submat((int) p1.y, (int) p2.y, (int) p1.x, (int) p2.x);
-        Mat r0t = inputPicture.submat((int) p1.y, (int) p2.y, (int) p1.x, (int) p2.x);
-        listDetectRectangle.add(new DetectRectangle(0, r0t, r0gt));
-
         Point[] r2Points = this.rectanglePoint.getR2Points();
-        p1 = r2Points[0];
-        p2 = r2Points[1];
-        Mat r1gt = inputPictureGray.submat((int) p1.y, (int) p2.y, (int) p1.x, (int) p2.x);
-        Mat r1t = inputPicture.submat((int) p1.y, (int) p2.y, (int) p1.x, (int) p2.x);
-        listDetectRectangle.add(new DetectRectangle(1, r1t, r1gt));
-
         Point[] r3Points = this.rectanglePoint.getR3Points();
-        p1 = r3Points[0];
-        p2 = r3Points[1];
-        Mat r2gt = inputPictureGray.submat((int) p1.y, (int) p2.y, (int) p1.x, (int) p2.x);
-        Mat r2t = inputPicture.submat((int) p1.y, (int) p2.y, (int) p1.x, (int) p2.x);
-        listDetectRectangle.add(new DetectRectangle(2, r2t, r2gt));
-
         Point[] r4Points = this.rectanglePoint.getR4Points();
-        p1 = r4Points[0];
-        p2 = r4Points[1];
-        Mat r3gt = inputPictureGray.submat((int) p1.y, (int) p2.y, (int) p1.x, (int) p2.x);
-        Mat r3t = inputPicture.submat((int) p1.y, (int) p2.y, (int) p1.x, (int) p2.x);
-        listDetectRectangle.add(new DetectRectangle(3, r3t, r3gt));
-
-        listDetectRectangle.detect();
-
-        r0t.release();
-        r1t.release();
-        r2t.release();
-        r3t.release();
-        r0gt.release();
-        r1gt.release();
-        r2gt.release();
-        r3gt.release();
+        List<Point[]> listPoints =  Arrays.asList(r1Points, r2Points, r3Points, r4Points);
+        DetectRectangle rectangle = new DetectRectangle(0, inputPicture, inputPictureGray, listPoints);
+        rectangle.detect();
 
         return inputPicture;
     }
