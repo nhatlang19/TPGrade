@@ -27,6 +27,12 @@ public class GlobalState extends SugarApp {
         rectPoint.set(i, point);
     }
 
+    public static void resetRect()
+    {
+        rect = Arrays.asList(0, 0, 0, 0);
+        rectPoint = Arrays.asList(new Point(), new Point(), new Point(), new Point());
+    }
+
     public static boolean isValid() {
         System.out.println("RECT: " + rect.get(0) + ":" + rect.get(1) + ":" + rect.get(2) + ":" + rect.get(3));
         return rect.get(0) != 0

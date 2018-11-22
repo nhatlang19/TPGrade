@@ -1,10 +1,17 @@
 package com.tpgrade.tpgrade.Processors.Detect.Conners;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.tpgrade.Lib.FileUtils;
+import com.tpgrade.Lib.Helper;
+import com.tpgrade.contants.ContantContest;
+import com.tpgrade.tpgrade.ContestGridActivity;
+import com.tpgrade.tpgrade.ContestKeyViewImageActivity;
 import com.tpgrade.tpgrade.GlobalState;
+import com.tpgrade.tpgrade.Processors.CaptureImage;
 
 import org.opencv.android.Utils;
 import org.opencv.core.CvException;
@@ -18,14 +25,15 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class DetectRectangle {
-
-    protected int id;
     protected Mat dst;
     protected Mat gray;
+
+    protected Mat original;
 
     protected Mat bwIMG, hsvIMG, lrrIMG, urrIMG, dsIMG, usIMG, cIMG, hovIMG;
     protected MatOfPoint2f approxCurve;
@@ -34,10 +42,14 @@ public class DetectRectangle {
 
     protected List<Point[]> listPoints;
 
-    public DetectRectangle(int id, Mat dst, Mat gray, List<Point[]> listPoints) {
-        this.id = id;
+    Context context;
+
+    public DetectRectangle(Context context, Mat dst, Mat gray, Mat original, List<Point[]> listPoints) {
+        this.context = context;
+
         this.dst = dst;
         this.gray = gray;
+        this.original = original;
 
         bwIMG = new Mat();
         dsIMG = new Mat();
@@ -137,7 +149,18 @@ public class DetectRectangle {
                         drawRect(dst, cnt);
 
                         if (GlobalState.isValid()) {
-                            drawRectFromMatOfPoint(dst, GlobalState.getRectPoint());
+                            if (!CaptureImage.DID_CAPTURE) {
+                                List<Point> points = GlobalState.getRectPoint();
+                                Point p1 = Helper.min(points);
+                                Point p2 = Helper.max(points);
+
+                                Mat origin = this.original.submat((int) p1.y, (int) p2.y, (int) p1.x, (int) p2.x);
+
+                                String path = CaptureImage.doCapture(original);
+                                Intent intent = new Intent(context, ContestKeyViewImageActivity.class);
+                                intent.putExtra(ContantContest.CONTEST_KEY_VIEW_IMAGE_PATH, path);
+                                context.startActivity(intent);
+                            }
                         }
                     }
                 }
@@ -147,20 +170,6 @@ public class DetectRectangle {
         return dst;
     }
 
-    protected void drawRectFromMatOfPoint(Mat im, List<Point> rectPoint)
-    {
-        Point point0 = rectPoint.get(0);
-        Point point1 = rectPoint.get(1);
-        Point point2 = rectPoint.get(2);
-        Point point3 = rectPoint.get(3);
-
-        int thickness = 1;//1;
-        Imgproc.rectangle(im, new Point(point0.x, point0.y), new Point(point1.x, point1.y), new Scalar(255, 0, 0), thickness);
-        Imgproc.rectangle(im, new Point(point1.x, point1.y), new Point(point2.x, point2.y), new Scalar(255, 0, 0), thickness);
-        Imgproc.rectangle(im, new Point(point2.x, point2.y), new Point(point3.x, point3.y), new Scalar(255, 0, 0), thickness);
-        Imgproc.rectangle(im, new Point(point3.x, point3.y), new Point(point0.x, point0.y), new Scalar(255, 0, 0), thickness);
-    }
-
     protected void drawRect(Mat im, MatOfPoint contour) {
         Rect rect = Imgproc.boundingRect(contour);
 
@@ -168,17 +177,6 @@ public class DetectRectangle {
         Imgproc.rectangle(im, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(255, 0, 0), thickness);
     }
 
-    protected void captureImage()
-    {
-        Bitmap bmp = null;
-        try {
-            bmp = Bitmap.createBitmap(dst.cols(), dst.rows(), Bitmap.Config.ARGB_8888);
-            Utils.matToBitmap(dst, bmp);
-            FileUtils.storePhotoOnDisk(bmp);
-        }
-        catch (CvException e){
-            Log.d("Exception",e.getMessage());
-        }
-    }
+
 
 }
