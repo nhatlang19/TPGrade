@@ -12,6 +12,7 @@ import com.tpgrade.tpgrade.ContestGridActivity;
 import com.tpgrade.tpgrade.ContestKeyViewImageActivity;
 import com.tpgrade.tpgrade.GlobalState;
 import com.tpgrade.tpgrade.Processors.CaptureImage;
+import com.tpgrade.tpgrade.Processors.Helper.PerspectiveTransform;
 
 import org.opencv.android.Utils;
 import org.opencv.core.CvException;
@@ -144,7 +145,22 @@ public class DetectRectangle {
 
                     int index = areaAllow(rect, this.listPoints);
                     if (index != -1 && index < 4) {
-                        GlobalState.updateRect(index, 1, new Point(rect.x, rect.y));
+                        Point p = null;
+                        switch(index) {
+                            case 0:
+                                p = new Point(rect.x, rect.y);
+                                break;
+                            case 1:
+                                p = new Point(rect.x + rect.width, rect.y);
+                                break;
+                            case 2:
+                                p = new Point(rect.x, rect.y + rect.height);
+                                break;
+                            case 3:
+                                p = new Point(rect.x + rect.width, rect.y + rect.height);
+                                break;
+                        }
+                        GlobalState.updateRect(index, 1, p);
 
                         drawRect(dst, cnt);
 
@@ -156,7 +172,14 @@ public class DetectRectangle {
 
                                 Mat origin = this.original.submat((int) p1.y, (int) p2.y, (int) p1.x, (int) p2.x);
 
-                                String path = CaptureImage.doCapture(original);
+//                                MatOfPoint2f contour2f = new MatOfPoint2f(GlobalState.getRectPointArray());
+//                                double approxDistance = Imgproc.arcLength(contour2f, true) * 0.02;
+//                                MatOfPoint2f approxCurve = new MatOfPoint2f();
+//                                Imgproc.approxPolyDP(contour2f, approxCurve, approxDistance, true);
+//
+//                                Mat warped = PerspectiveTransform.transform(origin, approxCurve);
+
+                                String path = CaptureImage.doCapture(origin);
                                 Intent intent = new Intent(context, ContestKeyViewImageActivity.class);
                                 intent.putExtra(ContantContest.CONTEST_KEY_VIEW_IMAGE_PATH, path);
                                 context.startActivity(intent);

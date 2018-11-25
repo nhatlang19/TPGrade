@@ -11,7 +11,7 @@ public class Template50 implements RectanglePointInterface {
     public Point[] getR1Points() {
         Point p1, p2;
         p1 = new Point();
-        p1.x = 0;
+        p1.x = RectangleContant.RECTANGLE__WIDTH;
         p1.y = 0;
 
         p2 = new Point();
@@ -27,7 +27,7 @@ public class Template50 implements RectanglePointInterface {
 
         Point p1, p2;
         p1 = new Point();
-        p1.x = ScreenUtils.getScreenWidth() - 2.5 * RectangleContant.RECTANGLE__WIDTH;
+        p1.x = ScreenUtils.getScreenWidth() - 2 * RectangleContant.RECTANGLE__WIDTH;
         p1.y = 0;
 
         p2 = new Point();
@@ -42,7 +42,7 @@ public class Template50 implements RectanglePointInterface {
     public Point[] getR3Points() {
         Point p1, p2;
         p1 = new Point();
-        p1.x = 0;
+        p1.x = RectangleContant.RECTANGLE__WIDTH;
         p1.y = ScreenUtils.getScreenHeight() - (1 * RectangleContant.RECTANGLE__HEIGHT);
 
         p2 = new Point();
@@ -58,7 +58,7 @@ public class Template50 implements RectanglePointInterface {
 
         Point p1, p2;
         p1 = new Point();
-        p1.x = ScreenUtils.getScreenWidth() - 2.5 * RectangleContant.RECTANGLE__WIDTH;
+        p1.x = ScreenUtils.getScreenWidth() - 2 * RectangleContant.RECTANGLE__WIDTH;
         p1.y = ScreenUtils.getScreenHeight() - (1 * RectangleContant.RECTANGLE__HEIGHT);
 
         p2 = new Point();

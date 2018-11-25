@@ -44,4 +44,8 @@ public class GlobalState extends SugarApp {
     public static List<Point> getRectPoint() {
         return rectPoint;
     }
+
+    public static Point[] getRectPointArray() {
+        return rectPoint.toArray(new Point[rectPoint.size()]);
+    }
 }
