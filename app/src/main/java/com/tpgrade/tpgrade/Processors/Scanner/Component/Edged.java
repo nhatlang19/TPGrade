@@ -19,7 +19,5 @@ public class Edged {
 		
 		edged = new Mat(blurred.rows(), blurred.cols(), CvType.CV_8UC3);
 		Imgproc.Canny(blurred, edged, 75, 200);
-		
-		Helper.write("output/" + ScannerMachine.nameFile + "_1_edged.jpg", edged);
 	}
 }

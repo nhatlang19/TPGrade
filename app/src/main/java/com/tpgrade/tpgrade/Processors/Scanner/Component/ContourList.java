@@ -28,14 +28,6 @@ public class ContourList {
 		contourList = new ArrayList<>();
 		Imgproc.findContours(edged, contourList, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
 
-		if (ScannerMachine.DEBUG == true) {
-			Mat copy = new Mat(edged.rows(), edged.cols(), CvType.CV_8UC3);
-			for (int contourIdx = 0; contourIdx < contourList.size(); contourIdx++) {
-				Imgproc.drawContours(copy, contourList, contourIdx, new Scalar(0, 0, 255), 3);
-			}
-			Helper.write("output/" + ScannerMachine.nameFile + "_2_find_contours.jpg", copy);
-		}
-
 		// Sort
 		Collections.sort(contourList, new Comparator<MatOfPoint>() {
 			@Override

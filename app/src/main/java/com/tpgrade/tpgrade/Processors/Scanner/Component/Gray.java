@@ -18,6 +18,5 @@ public class Gray {
 	public Gray(Mat sourceMat) {
 		gray = new Mat(sourceMat.rows(), sourceMat.cols(), CvType.CV_8UC3);
 		Imgproc.cvtColor(sourceMat, gray, Imgproc.COLOR_BGR2GRAY);
-		Helper.write("output/" + ScannerMachine.nameFile + "_0_gray.jpg", gray);
 	}
 }

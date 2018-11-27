@@ -51,63 +51,29 @@ public class Code {
 			}
 		}
 
-		if (ScannerMachine.DEBUG == true) {
-			Mat copy = new Mat(gray.rows(), gray.cols(), CvType.CV_8UC3);
-			Imgproc.drawContours(copy, contourList, contourIdxMax, new Scalar(0, 0, 255), 1);
-			Helper.write("output/" + ScannerMachine.nameFile + "_3_code.jpg", copy);
-		}
-
 		this.getCode(gray, sourceMat, approxCurveMax);
 	}
 
 	public void getCode(Mat gray, Mat sourceMat, MatOfPoint2f approxCurveMax) {
 		Mat warped = PerspectiveTransform.transform(gray, approxCurveMax);
-		Helper.write("output/" + ScannerMachine.nameFile + "_3_code_transform.jpg", warped);
 
 		Mat paper = PerspectiveTransform.transform(sourceMat, approxCurveMax);
-		Helper.write("output/" + ScannerMachine.nameFile + "_3_code_transform_paper.jpg", paper);
 
 		Mat thresh = new Mat(warped.rows(), warped.cols(), CvType.CV_8UC3);
 		Imgproc.threshold(warped, thresh, 0, 255, Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
-		Helper.write("output/" + ScannerMachine.nameFile + "_3_code_binarize.jpg", thresh);
 
 		List<MatOfPoint> numbers = new ArrayList<>();
 		List<MatOfPoint> cnts = new ArrayList<>();
 		Imgproc.findContours(thresh, cnts, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
 
-		Mat copy3 = new Mat(thresh.rows(), thresh.cols(), CvType.CV_8UC3);
 		for (int contourIdx = 0; contourIdx < cnts.size(); contourIdx++) {
 			final MatOfPoint contour = cnts.get(contourIdx);
 			final Rect bb = Imgproc.boundingRect(contour);
 			float ar = bb.width / (float) bb.height;
 
-			System.out.println("width:" + bb.width + ",height: " + bb.height + ",ar: " + ar);
 			if (bb.width >= 15 && bb.height >= 15 && ar >= 0.9 && ar <= 1.2) {
 				numbers.add(contour);
-				if (ScannerMachine.DEBUG == true) {
-					Imgproc.drawContours(copy3, cnts, contourIdx, new Scalar(0, 0, 255), 1);
-				}
 			}
-		}
-		Helper.write("output/" + ScannerMachine.nameFile + "_3_code_find_circle.jpg", copy3);
-		System.out.println(numbers.size());
-
-		if (ScannerMachine.DEBUG == true) {
-			Mat copy4 = new Mat(thresh.rows(), thresh.cols(), CvType.CV_8UC3);
-			int count = 0;
-			for (int q = 0; q < numbers.size(); q++) {
-				final MatOfPoint contour = numbers.get(q);
-				MatOfPoint2f contour2f = new MatOfPoint2f(contour.toArray());
-				Moments moment = Imgproc.moments(contour2f.col(0));
-				int cX = (int) (moment.get_m10() / moment.get_m00());
-				int cY = (int) (moment.get_m01() / moment.get_m00());
-
-				final Rect bb = Imgproc.boundingRect(numbers.get(q));
-				Imgproc.drawContours(copy4, numbers, q, new Scalar(0, 0, 255), 1);
-				Imgproc.putText(copy4, ++count + "", new Point(cX - 20, cY), Core.FONT_HERSHEY_SIMPLEX, 0.5,
-						new Scalar(255, 255, 255), 2);
-			}
-			Helper.write("output/" + ScannerMachine.nameFile + "_3_code_number.jpg", copy4);
 		}
 
 		// sort by y coordinates using the topleft point of every contour's bounding box
@@ -136,28 +102,9 @@ public class Code {
 			}
 		});
 
-		if (ScannerMachine.DEBUG == true) {
-			Mat copy5 = new Mat(thresh.rows(), thresh.cols(), CvType.CV_8UC3);
-			int count = 0;
-			for (int q = 0; q < numbers.size(); q++) {
-				final MatOfPoint contour = numbers.get(q);
-				MatOfPoint2f contour2f = new MatOfPoint2f(contour.toArray());
-				Moments moment = Imgproc.moments(contour2f.col(0));
-				int cX = (int) (moment.get_m10() / moment.get_m00());
-				int cY = (int) (moment.get_m01() / moment.get_m00());
-
-				final Rect bb = Imgproc.boundingRect(numbers.get(q));
-				Imgproc.drawContours(copy5, numbers, q, new Scalar(0, 0, 255), 1);
-				Imgproc.putText(copy5, ++count + "", new Point(cX - 20, cY), Core.FONT_HERSHEY_SIMPLEX, 0.5,
-						new Scalar(255, 255, 255), 2);
-			}
-			Helper.write("output/" + ScannerMachine.nameFile + "_3_code_number_after_sort.jpg", copy5);
-		}
-
 		for (int i = 0; i < numbers.size(); i++) {
 			Mat mask = Mat.zeros(thresh.rows(), thresh.cols(), CvType.CV_8U);
 			Imgproc.drawContours(mask, numbers, i, new Scalar(255, 255, 255), -1);
-			Helper.write("output/" + ScannerMachine.nameFile + "_3_code_" + i + ".jpg", mask);
 			Core.bitwise_and(thresh, thresh, mask, mask);
 
 			int total = Core.countNonZero(mask);
@@ -167,7 +114,5 @@ public class Code {
 				Imgproc.drawContours(paper, numbers, i, scalar, 2);
 			}
 		}
-
-		Helper.write("output/" + ScannerMachine.nameFile + "_3_code_result.jpg", paper);
 	}
 }
