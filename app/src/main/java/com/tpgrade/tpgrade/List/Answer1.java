@@ -9,9 +9,9 @@ import com.tpgrade.tpgrade.R;
 
 public class Answer1 extends ListMini implements View.OnClickListener {
 
-    public static final String A = "A", B = "B", C = "C", D = "D", E = "E", NOT = "";
+    public static final String A = "A", B = "B", C = "C", D = "D", NOT = "";
 
-    public static String[] DAP_AN = {A, B, C, D, E};
+    public static String[] DAP_AN = {A, B, C, D};
     int selected;
 
     public Answer1(ViewGroup vg, String dapAn) {

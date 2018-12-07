@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Exam extends SugarRecord {
-    public String examTitle; // 012, 112, 312
+    public String examTitle; // 0123, 1123, 3123
     public Date created;
 
     public Topic topic;

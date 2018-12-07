@@ -35,21 +35,22 @@ public class KeyFragment extends Fragment {
         LinearLayout[] lls = {
                 (LinearLayout) v.findViewById(R.id.ll2),
                 (LinearLayout) v.findViewById(R.id.ll3),
-                (LinearLayout)  v.findViewById(R.id.ll4)
+                (LinearLayout)  v.findViewById(R.id.ll4),
+                (LinearLayout)  v.findViewById(R.id.ll5)
         };
 
         String made = getArguments().getString(ARG_MA_DE);
-        int[] selected = new int[]{-1, -1, -1};
-        if (made != null && made.length() == 3) {
+        int[] selected = new int[]{-1, -1, -1, -1};
+        if (made != null && made.length() == 4) {
             try {
                 for (int i = 0; i < selected.length; i++)
                     selected[i] = Integer.parseInt(String.valueOf(made.charAt(i)));
             } catch (Exception e) {
             }
         }
-        int number = 10;
+        int number = 4;
         new ListNumber((ViewGroup) v.findViewById(R.id.ll1), number).create();
-        lsNumbrer = new ListSelectNumber[3];
+        lsNumbrer = new ListSelectNumber[4];
         for (int i = 0; i < lsNumbrer.length; i++) {
             lsNumbrer[i] = new ListSelectNumber(lls[i], number, selected[i]);
             lsNumbrer[i].create();

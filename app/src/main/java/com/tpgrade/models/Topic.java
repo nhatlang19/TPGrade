@@ -6,10 +6,10 @@ import com.orm.dsl.Ignore;
 import java.util.Date;
 
 public class Topic extends SugarRecord {
-    public String testName;
-    public int typePaper;
-    public int numbers;
-    public int topScore;
+    public String testName;         // tên bài
+    public int typePaper;           // loại phiếu
+    public int numbers;             // số câu
+    public int topScore;            // hệ điểm
     public Date created;
     public int answerNumber;
     public int keyNumber;

@@ -17,4 +17,8 @@ public class Helper {
     public static double[] getColor(Mat frame, Rect rect) {
         return getCMat(frame, rect).get(0, 0);
     }
+
+    public static double tinhDiem(int soCauDung, int tongSoCau, int heSoDiem) {
+        return (heSoDiem / tongSoCau) * soCauDung;
+    }
 }

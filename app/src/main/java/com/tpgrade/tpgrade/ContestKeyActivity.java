@@ -61,12 +61,12 @@ public class ContestKeyActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.contest_key_menu__camera) {
-            Intent intent = new Intent(this, ContestKeyCameraActivity.class);
-            startActivityForResult(intent, ContantContest.REQUEST_CODE__CAMERA);
-
-            return true;
-        }
+//        if (id == R.id.contest_key_menu__camera) {
+//            Intent intent = new Intent(this, ContestKeyCameraActivity.class);
+//            startActivityForResult(intent, ContantContest.REQUEST_CODE__CAMERA);
+//
+//            return true;
+//        }
 
         if (id == R.id.contest_key_menu__add) {
             Intent intent = new Intent(this, ContestKeyAddActivity.class);
