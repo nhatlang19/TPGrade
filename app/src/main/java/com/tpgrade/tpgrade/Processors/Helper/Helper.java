@@ -19,6 +19,9 @@ public class Helper {
     }
 
     public static double tinhDiem(int soCauDung, int tongSoCau, int heSoDiem) {
+        if (tongSoCau == 0) {
+            return 0.0;
+        }
         return (heSoDiem / tongSoCau) * soCauDung;
     }
 }

@@ -186,42 +186,42 @@ public class DetectRectangle {
                 long currentTopicId = global.getSelectedTopicId();
 
                 Topic topic = Topic.findById(Topic.class, currentTopicId);
-
                 if (answers.size() >= topic.numbers) {
-                    List<Exam> exams = Exam.find(Exam.class, "examTitle = ? and topic = ?", new String[]{maDe, String.valueOf(currentTopicId)}, null, null, "1");
+                    List<Exam> exams = Exam.find(Exam.class, "exam_title = ? and topic = ?", new String[]{maDe, String.valueOf(currentTopicId)}, null, null, "1");
+                    int correct = 0;
+                    int count = 0;
                     if (!exams.isEmpty()) {
                         Exam exam = exams.get(0);
                         List<String> examAnswer = exam.answers;
 
-                        int count = examAnswer.size();
+                        count = examAnswer.size();
 
-                        int correct = 0;
                         for (int i = 0; i < count; i++) {
                             if (answers.get(i) == parseAnswer(examAnswer.get(i))) {
                                 correct++;
                             }
                         }
-
-                        this.diem = Helper.tinhDiem(correct, count, topic.topScore);
-
-                        List<Point> pointList = GlobalState.getRectPoint();
-                        Point p0 = pointList.get(0);
-                        Point p1 = pointList.get(1);
-                        Point p2 = pointList.get(2);
-                        Point p3 = pointList.get(3);
-
-                        Imgproc.putText(dst, diem + "", new Point(p1.x - 200, p1.y + 200), Core.FONT_HERSHEY_SIMPLEX, 1,
-                                new Scalar(255, 0, 0), 2);
-                        Imgproc.putText(original, diem + "", new Point(p1.x - 200, p1.y + 200), Core.FONT_HERSHEY_SIMPLEX, 1,
-                                new Scalar(255, 0, 0), 2);
-
-                        // luu hinh
-                        Mat origin = this.original.submat(new Rect((int) p0.x, (int) p0.y, (int) (p3.x - p0.x), (int) (p3.y - p0.y)));
-                        String path = CaptureImage.doCapture(origin);
-                        Intent intent = new Intent(context, ContestKeyViewImageActivity.class);
-                        intent.putExtra(ContantContest.CONTEST_KEY_VIEW_IMAGE_PATH, path);
-                        context.startActivity(intent);
                     }
+
+                    this.diem = Helper.tinhDiem(correct, count, topic.topScore);
+
+                    List<Point> pointList = GlobalState.getRectPoint();
+                    Point p0 = pointList.get(0);
+                    Point p1 = pointList.get(1);
+                    Point p2 = pointList.get(2);
+                    Point p3 = pointList.get(3);
+
+                    Imgproc.putText(dst, diem + "", new Point(p1.x - 200, p1.y + 200), Core.FONT_HERSHEY_SIMPLEX, 1,
+                            new Scalar(255, 0, 0), 2);
+                    Imgproc.putText(original, diem + "", new Point(p1.x - 200, p1.y + 200), Core.FONT_HERSHEY_SIMPLEX, 1,
+                            new Scalar(255, 0, 0), 2);
+
+                    // luu hinh
+                    Mat origin = this.original.submat(new Rect((int) p0.x, (int) p0.y, (int) (p3.x - p0.x), (int) (p3.y - p0.y)));
+                    String path = CaptureImage.doCapture(origin);
+                    Intent intent = new Intent(context, ContestKeyViewImageActivity.class);
+                    intent.putExtra(ContantContest.CONTEST_KEY_VIEW_IMAGE_PATH, path);
+                    context.startActivity(intent);
                 }
             }
         }
@@ -307,94 +307,72 @@ public class DetectRectangle {
             Rect rect4 = Imgproc.boundingRect(mop_4);
             Drawing.drawRectPink(dst, mop_4);
 
-            int cX = rect1.x + rect1.width + 5;
-            int cY = rect1.y + rect1.height + 5;
-            Mat frameROI = new Mat(cIMG, new Rect(cX, cY, rect4.x - cX, rect4.y - cY));
+            int cX = rect1.x + rect1.width;
+            int cY = rect1.y + rect1.height;
 
-            List<MatOfPoint> cs = new ArrayList<>();
-            List<MatOfPoint> circles = new ArrayList<>();
-            Imgproc.findContours(frameROI, cs, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+            Point p1 = new Point(rect1.x + rect1.width, rect1.y + rect1.height);
+            Point p2 = new Point(rect2.x, rect2.y + rect2.height);
+            Point p3 = new Point(rect3.x + rect3.width, rect3.y);
+            Point p4 = new Point(rect4.x, rect4.y);
 
-            for (int contourIdx = 0; contourIdx < cs.size(); contourIdx++) {
-                MatOfPoint contour = cs.get(contourIdx);
-                Rect rect = Imgproc.boundingRect(contour);
-
-                float ar = rect.width / (float) rect.height;
-                if (rect.width >= 20 && rect.height >= 20) {
-                    circles.add(contour);
-                }
-            }
-
-            if (circles.size() != 40) {
-                return answers;
-            }
-
-            circles = Sort.doSort(circles);
-//            Imgproc.putText(dst, circles.size() + "", new Point(50, 50), Core.FONT_HERSHEY_SIMPLEX, 2,
-//                    new Scalar(255, 255, 255), 2);
-            for (int contourIdx = 0; contourIdx < circles.size(); contourIdx++) {
-                MatOfPoint contour = circles.get(contourIdx);
-                MatOfPoint2f contour2f = new MatOfPoint2f(contour.toArray());
-                Moments moment = Imgproc.moments(contour2f.col(0));
-                int cXX = (int) (moment.get_m10() / moment.get_m00());
-                int cYY = (int) (moment.get_m01() / moment.get_m00());
-
-                Imgproc.putText(im, contourIdx + "", new Point(cXX - 20 + cX, cYY + cY), Core.FONT_HERSHEY_SIMPLEX, 0.5,
-                        new Scalar(255, 255, 255), 2);
-            }
-
-            List<Question> questions = new ArrayList<>();
-            for (int contourIdx = 0; contourIdx < circles.size(); contourIdx += 4) {
-                Question question = new Question();
-                question.add(circles.get(contourIdx));
-                question.add(circles.get(contourIdx + 1));
-                question.add(circles.get(contourIdx + 2));
-                question.add(circles.get(contourIdx + 3));
-                questions.add(question);
-            }
-
-            Mat thresh = new Mat(frameROI.rows(), frameROI.cols(), CvType.CV_8UC3);
-            Imgproc.threshold(frameROI, thresh, 0, 255, Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
+            double tbW = (p2.x - p1.x) / 4;
+            double tbH = (p3.y - p1.y) / 10;
 
             int thickness = 2;
-            int idx = 0;
-            int correct = 0;
-            for (Question question : questions) {
-                int k = -1;
-                int bubbleTotal = 0;
-                Rect rectMax = new Rect();
-                for (int i = 0; i < question.cnts.size(); i++) {
-                    MatOfPoint contour = question.cnts.get(i);
-                    Rect rect = Imgproc.boundingRect(contour);
-                    Imgproc.rectangle(im, new Point(cX + rect.x, cY + rect.y), new Point(cX + rect.x + rect.width, cY + rect.y + rect.height), new Scalar(0, 0, 255), thickness);
+            double x;
+            double y = p1.y;
+            Mat frameROI = new Mat(cIMG, new Rect(cX, cY, rect4.x - cX, rect4.y - cY));
 
-                    Mat mask = Mat.zeros(thresh.rows(), thresh.cols(), CvType.CV_8U);
-                    Imgproc.drawContours(mask, question.cnts, i, new Scalar(255, 255, 255), -1);
-                    Core.bitwise_and(thresh, thresh, mask, mask);
+            int bubbleTotal = 0;
+            double tX = 0;
+            double tY = 0;
+            Point keepStart = null;
+            Point keepEnd = null;
+
+            int k = 0;
+            for (int i = 0; i < 10; i++) {
+                x = p1.x;
+                tX = 0;
+                keepStart = null;
+                keepEnd = null;
+                bubbleTotal = -1;
+                k = 0;
+                for (int j = 0; j < 4; j++) {
+
+                    Point pStart = new Point(x, y);
+                    Point pEnd = new Point(x + tbW, y + tbH);
+
+                    Point tStart = new Point(tX, tY);
+                    Point tEnd = new Point(tX + tbW, tY + tbH);
+
+                    Mat mask = Mat.zeros(frameROI.rows(), frameROI.cols(), CvType.CV_8U);
+                    Imgproc.rectangle(mask, tStart, tEnd, new Scalar(255, 255, 255), -1);
+
+                    Core.bitwise_and(frameROI, frameROI, mask, mask);
                     int total = Core.countNonZero(mask);
-                    if (total >= 150 && total > bubbleTotal) {
+                    if (total > bubbleTotal) {
                         bubbleTotal = total;
-                        rectMax = rect;
-                        k = i; // vi tri tra loi dung
+                        keepStart = pStart;
+                        keepEnd = pEnd;
+                        k = j;
                     }
+                    Imgproc.rectangle(im, pStart, pEnd, new Scalar(0, 0, 255), thickness);
 
                     mask.release();
+                    x += tbW;
+                    tX += tbW;
                 }
 
-                if (k != -1 && bubbleTotal != 0) {
-                    // Hien thi khung tra loi
-                    Point pStart = new Point(cX + rectMax.x, cY + rectMax.y);
-                    Point pEnd = new Point(cX + rectMax.x + rectMax.width, cY + rectMax.y + rectMax.height);
-                    Imgproc.rectangle(im, pStart, pEnd, new Scalar(0, 255, 0), thickness);
-                    Imgproc.rectangle(origin, pStart, pEnd, new Scalar(0, 255, 0), thickness);
+                if (bubbleTotal != -1) {
+                    Imgproc.rectangle(im, keepStart, keepEnd, new Scalar(0, 255, 0), thickness);
 
                     answers.add(k);
                 }
+
+                y += tbH;
+                tY += tbH;
             }
-
-            thresh.release();
             frameROI.release();
-
             return answers;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -418,8 +396,8 @@ public class DetectRectangle {
             Rect rect4 = Imgproc.boundingRect(mop_4);
             Drawing.drawRectPink(dst, mop_4);
 
-            int cX = rect1.x + rect1.width;
-            int cY = rect1.y + rect1.height;
+            int cX = rect1.x + rect1.width + 1;
+            int cY = rect1.y + rect1.height + 1;
 
             Point p1 = new Point(rect1.x + rect1.width, rect1.y + rect1.height);
             Point p2 = new Point(rect2.x, rect2.y + rect2.height);
@@ -433,17 +411,19 @@ public class DetectRectangle {
             double x;
             double y = p1.y;
             Mat frameROI = new Mat(cIMG, new Rect(cX, cY, rect4.x - cX, rect4.y - cY));
-            Mat thresh = new Mat(frameROI.rows(), frameROI.cols(), CvType.CV_8UC3);
-            Imgproc.threshold(frameROI, thresh, 0, 255, Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
-            int bubbleTotal = 0;
+            int bubbleTotal;
             double tX = 0;
             double tY = 0;
+            Point keepStart = null;
+            Point keepEnd = null;
+            int k = 0;
             for (int i = 0; i < 4; i++) {
                 x = p1.x;
                 tX = 0;
-                Point keepStart = null;
-                Point keepEnd = null;
-                bubbleTotal = 0;
+                keepStart = null;
+                keepEnd = null;
+                bubbleTotal = -1;
+                k = 0;
                 for (int j = 0; j < 4; j++) {
                     Point pStart = new Point(x, y);
                     Point pEnd = new Point(x + tbW, y + tbH);
@@ -451,18 +431,16 @@ public class DetectRectangle {
                     Point tStart = new Point(tX, tY);
                     Point tEnd = new Point(tX + tbW, tY + tbH);
 
-                    Mat mask = Mat.zeros(thresh.rows(), thresh.cols(), CvType.CV_8U);
+                    Mat mask = Mat.zeros(frameROI.rows(), frameROI.cols(), CvType.CV_8U);
                     Imgproc.rectangle(mask, tStart, tEnd, new Scalar(255, 255, 255), -1);
 
-                    Core.bitwise_and(thresh, thresh, mask, mask);
+                    Core.bitwise_and(frameROI, frameROI, mask, mask);
                     int total = Core.countNonZero(mask);
-                    Imgproc.putText(dst, total + "", new Point(250, 250), Core.FONT_HERSHEY_SIMPLEX, 2,
-                            new Scalar(255, 255, 255), 2);
-                    System.out.println("TOTALLLL-" + i + " : " + total);
-                    if (total >= bubbleTotal) {
+                    if (total > bubbleTotal) {
                         bubbleTotal = total;
                         keepStart = pStart;
                         keepEnd = pEnd;
+                        k = j;
                     }
                     Imgproc.rectangle(im, pStart, pEnd, new Scalar(0, 0, 255), thickness);
 
@@ -472,107 +450,21 @@ public class DetectRectangle {
                     tX += tbW;
                 }
 
-                if (keepStart != null) {
+                if (bubbleTotal != -1) {
                     Imgproc.rectangle(im, keepStart, keepEnd, new Scalar(0, 255, 0), thickness);
+                    this.maDe += k + "";
                 }
 
                 y += tbH;
                 tY += tbH;
             }
-            thresh.release();
+
+            Imgproc.putText(dst, "MADE:" + this.maDe, new Point(250, 250), Core.FONT_HERSHEY_SIMPLEX, 2,
+            new Scalar(255, 255, 255), 2);
             frameROI.release();
         } catch(Exception ex) {
             System.out.println(ex.getMessage());
         }
-//        try {
-//            Mat frameROI = new Mat(cIMG, new Rect(cX, cY, rect4.x - cX, rect4.y - cY));
-//           // Imgproc.rectangle(im, new Point(cX, cY), new Point(rect4.x, rect4.y), new Scalar(0, 0, 255), 2);
-//
-//            List<MatOfPoint> cs = new ArrayList<>();
-//            List<MatOfPoint> circles = new ArrayList<>();
-//            Imgproc.findContours(frameROI, cs, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
-//            for (int contourIdx = 0; contourIdx < cs.size(); contourIdx++) {
-//                MatOfPoint contour = cs.get(contourIdx);
-//                Rect rect = Imgproc.boundingRect(contour);
-//                float ar = rect.width / (float) rect.height;
-//                if (rect.width >= 20 && rect.height >= 20) {
-//                    circles.add(contour);
-//                }
-//            }
-//
-//            if (circles.size() != 16) {
-//                return;
-//            }
-//
-//            circles = Sort.doSort(circles);
-//
-//            for (int contourIdx = 0; contourIdx < circles.size(); contourIdx++) {
-//                MatOfPoint contour = circles.get(contourIdx);
-//                MatOfPoint2f contour2f = new MatOfPoint2f(contour.toArray());
-//                Moments moment = Imgproc.moments(contour2f.col(0));
-//                int cXX = (int) (moment.get_m10() / moment.get_m00());
-//                int cYY = (int) (moment.get_m01() / moment.get_m00());
-//
-//                Imgproc.putText(im, contourIdx + "", new Point(cXX - 20 + cX, cYY + cY), Core.FONT_HERSHEY_SIMPLEX, 0.5,
-//                        new Scalar(255, 255, 255), 2);
-//            }
-//
-//            List<Question> questions = new ArrayList<>();
-//            for (int contourIdx = 0; contourIdx < circles.size(); contourIdx += 4) {
-//                Question question = new Question();
-//                question.add(circles.get(contourIdx));
-//                question.add(circles.get(contourIdx + 1));
-//                question.add(circles.get(contourIdx + 2));
-//                question.add(circles.get(contourIdx + 3));
-//                questions.add(question);
-//            }
-//
-//            Mat thresh = new Mat(frameROI.rows(), frameROI.cols(), CvType.CV_8UC3);
-//            Imgproc.threshold(frameROI, thresh, 0, 255, Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
-//
-//            int thickness = 2;
-//            int idx = 0;
-//            int correct = 0;
-//            for (Question question : questions) {
-//                int k = -1;
-//                int bubbleTotal = 0;
-//                Rect rectMax = new Rect();
-//                for (int i = 0; i < question.cnts.size(); i++) {
-//                    MatOfPoint contour = question.cnts.get(i);
-//                    Rect rect = Imgproc.boundingRect(contour);
-//                    Imgproc.rectangle(im, new Point(cX + rect.x, cY + rect.y), new Point(cX + rect.x + rect.width, cY + rect.y + rect.height), new Scalar(0, 0, 255), thickness);
-//
-//                    Mat mask = Mat.zeros(thresh.rows(), thresh.cols(), CvType.CV_8U);
-//                    Imgproc.drawContours(mask, question.cnts, i, new Scalar(255, 255, 255), -1);
-//                    Core.bitwise_and(thresh, thresh, mask, mask);
-//                    int total = Core.countNonZero(mask);
-//                    if (total >= 130 && total > bubbleTotal) {
-//                        bubbleTotal = total;
-//                        rectMax = rect;
-//                        k = i; // vi tri tra loi dung
-//                    }
-//
-//                    mask.release();
-//                }
-//
-//                if (k != -1) {
-//                    // Hien thi khung tra loi
-//                    Point pStart = new Point(cX + rectMax.x, cY + rectMax.y);
-//                    Point pEnd = new Point(cX + rectMax.x + rectMax.width, cY + rectMax.y + rectMax.height);
-//                    Imgproc.rectangle(im, pStart, pEnd, new Scalar(0, 255, 0), thickness);
-//                    Imgproc.rectangle(origin, pStart, pEnd, new Scalar(0, 255, 0), thickness);
-//
-//                    this.maDe += k + "";
-//                }
-//            }
-//            Imgproc.putText(dst, "MADE:" + this.maDe, new Point(250, 250), Core.FONT_HERSHEY_SIMPLEX, 2,
-//                    new Scalar(255, 255, 255), 2);
-//
-//            thresh.release();
-//            frameROI.release();
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
     }
 
     protected void handleGreen(Mat im, Mat origin, List<MatOfPoint> contours) {
