@@ -189,7 +189,7 @@ public class DetectRectangleBk2 {
                 Topic topic = Topic.findById(Topic.class, currentTopicId);
 
                 if (answers.size() >= topic.numbers) {
-                    List<Exam> exams = Exam.find(Exam.class, "examTitle = ? and topic = ?", new String[]{maDe, String.valueOf(currentTopicId)}, null, null, "1");
+                    List<Exam> exams = Exam.find(Exam.class, "exam_title = ? and topic = ?", new String[]{maDe, String.valueOf(currentTopicId)}, null, null, "1");
                     if (!exams.isEmpty()) {
                         Exam exam = exams.get(0);
                         List<String> examAnswer = exam.answers;

@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.tpgrade.models.Exam;
 import com.tpgrade.models.Topic;
 import com.tpgrade.tpgrade.Adapters.TopicAdapter;
 import com.tpgrade.tpgrade.Fragments.Home.CreateNewDialogFragment;
@@ -104,6 +105,7 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_remove_all) {
+            Exam.deleteAll(Exam.class);
             Topic.deleteAll(Topic.class);
             topicAdapter.clear();
             topicAdapter.notifyDataSetChanged();

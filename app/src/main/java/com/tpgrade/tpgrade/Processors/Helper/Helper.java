@@ -4,6 +4,10 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Helper {
     public static Point getPointCenter(Rect rect) {
         return new Point(rect.x + (rect.width / 2), rect.y + (rect.height / 2));
@@ -22,6 +26,11 @@ public class Helper {
         if (tongSoCau == 0) {
             return 0.0;
         }
-        return (heSoDiem / tongSoCau) * soCauDung;
+        return ((double)heSoDiem / tongSoCau) * soCauDung;
+    }
+
+    public static String formatNumber(double value) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(value);
     }
 }

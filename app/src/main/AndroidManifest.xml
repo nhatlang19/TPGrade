@@ -28,10 +28,10 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="DATABASE"
-            android:value="tpgrade.db" />
+            android:value="tpgrade_dev.db" />
         <meta-data
             android:name="VERSION"
-            android:value="5" />
+            android:value="1" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />

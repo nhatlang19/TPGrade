@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.tpgrade.Lib.DateUtils;
 import com.tpgrade.contants.ContantContest;
+import com.tpgrade.models.Exam;
 import com.tpgrade.models.Topic;
 import com.tpgrade.tpgrade.ContestGridActivity;
 import com.tpgrade.tpgrade.Fragments.Home.EditTopicDialogFragment;
@@ -60,6 +61,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                List<Exam> exams = Exam.find(Exam.class, "topic = ?", new String[]{String.valueOf(topic.getId())});
+                Exam.deleteInTx(exams);
                 Topic dbTopic = Topic.findById(Topic.class, topic.getId());
                 dbTopic.delete();
                 topics.remove(position);
