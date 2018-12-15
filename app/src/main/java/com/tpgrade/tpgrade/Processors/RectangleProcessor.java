@@ -3,7 +3,6 @@ package com.tpgrade.tpgrade.Processors;
 import android.content.Context;
 
 import com.tpgrade.tpgrade.Processors.Detect.Conners.DetectRectangle;
-import com.tpgrade.tpgrade.Processors.Detect.Conners.ListDetectRectangle;
 import com.tpgrade.tpgrade.Processors.Interfaces.RectanglePointInterface;
 
 import org.opencv.core.Mat;
