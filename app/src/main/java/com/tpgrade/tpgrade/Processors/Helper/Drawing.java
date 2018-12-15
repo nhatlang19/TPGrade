@@ -9,19 +9,19 @@ import org.opencv.imgproc.Imgproc;
 
 public class Drawing {
     public static void drawRect(Mat im, MatOfPoint contour) {
-        Drawing.drawColor(im, contour, new Scalar(255, 0, 0), 3);
+        Drawing.drawColor(im, contour, new Scalar(255, 0, 0, 255), 3);
     }
 
     public static void drawRectPink(Mat im, MatOfPoint contour) {
-        Drawing.drawColor(im, contour, new Scalar(255, 0, 255), 2);
+        Drawing.drawColor(im, contour, new Scalar(255, 0, 255, 255), 2);
     }
 
     public static void drawRectBlue(Mat im, MatOfPoint contour) {
-        Drawing.drawColor(im, contour, new Scalar(0, 0, 255), 3);
+        Drawing.drawColor(im, contour, new Scalar(0, 0, 255, 255), 3);
     }
 
     public static void drawRectGreen(Mat im, MatOfPoint contour) {
-        Drawing.drawColor(im, contour, new Scalar(0, 255, 0), 3);
+        Drawing.drawColor(im, contour, new Scalar(0, 255, 0, 255), 3);
     }
 
     public static void drawColor(Mat im, MatOfPoint contour, Scalar color, int thickness) {

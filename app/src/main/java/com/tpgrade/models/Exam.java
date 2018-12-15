@@ -22,6 +22,10 @@ public class Exam extends SugarRecord {
 
     // Default constructor is necessary for SugarRecord
     public Exam() {
+        this.topic = new Topic();
+        this.examTitle = "";
+        this.created = new Date();
+        this.answerStr = "";
         this.answers = new ArrayList<>();
     }
 

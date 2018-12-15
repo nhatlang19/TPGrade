@@ -44,6 +44,8 @@ public class DetectRectangle {
     protected String maDe;
     protected double diem;
 
+    protected int thickness = 2;
+
     public DetectRectangle(Context context, Mat dst, Mat gray, Mat original, List<Point[]> listPoints) {
         this.context = context;
 
@@ -101,10 +103,10 @@ public class DetectRectangle {
     }
 
     public synchronized Mat detect() {
-       // Imgproc.pyrDown(gray, dsIMG, new Size(gray.cols() / 2, gray.rows() / 2));
-       // Imgproc.pyrUp(dsIMG, usIMG, gray.size());
+        // Imgproc.pyrDown(gray, dsIMG, new Size(gray.cols() / 2, gray.rows() / 2));
+        // Imgproc.pyrUp(dsIMG, usIMG, gray.size());
 
-       // Imgproc.Canny(usIMG, bwIMG, 0, 100);
+        // Imgproc.Canny(usIMG, bwIMG, 0, 100);
 
         //Imgproc.dilate(bwIMG, bwIMG, new Mat(), new Point(-1, 1), 1);
 
@@ -169,6 +171,7 @@ public class DetectRectangle {
                         GlobalState.updateRect(index, 1, p);
 
                         Drawing.drawRect(dst, cnt);
+                        Drawing.drawRect(original, cnt);
                     } else if (rect.width > rect.height) {
                         if (rect.width >= 25 && rect.height <= 30 && rect.height >= 20) {
                             contoursGreen.add(cnt);
@@ -185,22 +188,23 @@ public class DetectRectangle {
 
             handleCode(dst, original, contoursGreen);
 
-            List<Integer> answers = handleAnswer(dst, original, contoursGreen);
             if (GlobalState.isValid() && maDe.length() == 4) {
                 GlobalState global = (GlobalState) context.getApplicationContext();
                 long currentTopicId = global.getSelectedTopicId();
-
                 Topic topic = Topic.findById(Topic.class, currentTopicId);
+                List<Exam> exams = Exam.find(Exam.class, "exam_title = ? and topic = ?", new String[]{maDe, String.valueOf(currentTopicId)}, null, null, "1");
+
+                List<String> examAnswer = new ArrayList<>();
+                if (!exams.isEmpty()) {
+                    Exam exam = exams.get(0);
+                    examAnswer = exam.getAnswers();
+                }
+                List<Integer> answers = handleAnswer(dst, original, examAnswer, contoursGreen);
                 if (answers.size() >= topic.numbers) {
-                    List<Exam> exams = Exam.find(Exam.class, "exam_title = ? and topic = ?", new String[]{maDe, String.valueOf(currentTopicId)}, null, null, "1");
                     int correct = 0;
                     int count = 0;
                     if (!exams.isEmpty()) {
-                        Exam exam = exams.get(0);
-                        List<String> examAnswer = exam.getAnswers();
-
                         count = examAnswer.size();
-
                         for (int i = 0; i < count; i++) {
                             if (answers.get(i) == parseAnswer(examAnswer.get(i))) {
                                 correct++;
@@ -216,17 +220,17 @@ public class DetectRectangle {
                     Point p2 = pointList.get(2);
                     Point p3 = pointList.get(3);
 
-                    Imgproc.putText(dst, Helper.formatNumber(this.diem) + "", new Point(p1.x - 150, p1.y + 150), Core.FONT_HERSHEY_SIMPLEX, 3,
-                            new Scalar(255, 0, 0), 2);
-                    Imgproc.putText(original, Helper.formatNumber(this.diem) + "", new Point(p1.x - 150, p1.y + 150), Core.FONT_HERSHEY_SIMPLEX, 3,
-                            new Scalar(255, 0, 0), 2);
+                    Imgproc.putText(dst, Helper.formatNumber(this.diem) + "", new Point(p1.x - 200, p1.y + 150), Core.FONT_HERSHEY_SIMPLEX, 3,
+                            new Scalar(255, 0, 0, 255), 2);
+                    Imgproc.putText(original, Helper.formatNumber(this.diem) + "", new Point(p1.x - 200, p1.y + 150), Core.FONT_HERSHEY_SIMPLEX, 3,
+                            new Scalar(255, 0, 0, 255), 2);
 
                     // luu hinh
-//                    Mat origin = this.original.submat(new Rect((int) p0.x, (int) p0.y, (int) (p3.x - p0.x), (int) (p3.y - p0.y)));
-//                    String path = CaptureImage.doCapture(origin);
-//                    Intent intent = new Intent(context, ContestKeyViewImageActivity.class);
-//                    intent.putExtra(ContantContest.CONTEST_KEY_VIEW_IMAGE_PATH, path);
-//                    context.startActivity(intent);
+                    Mat origin = this.original.submat(new Rect((int) p0.x, (int) p0.y, (int) (p3.x - p0.x), (int) (p3.y - p0.y)));
+                    String path = CaptureImage.doCapture(origin);
+                    Intent intent = new Intent(context, ContestKeyViewImageActivity.class);
+                    intent.putExtra(ContantContest.CONTEST_KEY_VIEW_IMAGE_PATH, path);
+                    context.startActivity(intent);
                 }
             }
         }
@@ -259,43 +263,43 @@ public class DetectRectangle {
         this.doHandleCode(im, origin, contours, positions);
     }
 
-    protected List<Integer> handleAnswer(Mat im, Mat origin, List<MatOfPoint> contours) {
+    protected List<Integer> handleAnswer(Mat im, Mat origin, List<String> examAnswer, List<MatOfPoint> contours) {
         List<Integer> answers = new ArrayList<>();
-        answers.addAll(this.handleZone1(im, origin, contours));
-        answers.addAll(this.handleZone2(im, origin, contours));
-        answers.addAll(this.handleZone3(im, origin, contours));
-        answers.addAll(this.handleZone4(im, origin, contours));
-        answers.addAll(this.handleZone5(im, origin, contours));
+        answers.addAll(this.handleZone1(im, origin, examAnswer, contours));
+        answers.addAll(this.handleZone2(im, origin, examAnswer, contours));
+        answers.addAll(this.handleZone3(im, origin, examAnswer, contours));
+        answers.addAll(this.handleZone4(im, origin, examAnswer, contours));
+        answers.addAll(this.handleZone5(im, origin, examAnswer, contours));
 
         return answers;
     }
 
-    protected List<Integer> handleZone1(Mat im, Mat origin, List<MatOfPoint> contours) {
+    protected List<Integer> handleZone1(Mat im, Mat origin, List<String> examAnswer, List<MatOfPoint> contours) {
         int[] positions = new int[]{4, 5, 10, 11};
-        return this.doHandle(im, origin, contours, positions);
+        return this.doHandle(im, origin, contours, positions, examAnswer, 0);
     }
 
-    protected List<Integer> handleZone2(Mat im, Mat origin, List<MatOfPoint> contours) {
+    protected List<Integer> handleZone2(Mat im, Mat origin, List<String> examAnswer, List<MatOfPoint> contours) {
         int[] positions = new int[]{5, 6, 11, 12};
-        return this.doHandle(im, origin, contours, positions);
+        return this.doHandle(im, origin, contours, positions, examAnswer, 10);
     }
 
-    protected List<Integer> handleZone3(Mat im, Mat origin, List<MatOfPoint> contours) {
+    protected List<Integer> handleZone3(Mat im, Mat origin, List<String> examAnswer, List<MatOfPoint> contours) {
         int[] positions = new int[]{6, 7, 12, 13};
-        return this.doHandle(im, origin, contours, positions);
+        return this.doHandle(im, origin, contours, positions, examAnswer, 20);
     }
 
-    protected List<Integer> handleZone4(Mat im, Mat origin, List<MatOfPoint> contours) {
+    protected List<Integer> handleZone4(Mat im, Mat origin, List<String> examAnswer, List<MatOfPoint> contours) {
         int[] positions = new int[]{7, 8, 13, 14};
-        return this.doHandle(im, origin, contours, positions);
+        return this.doHandle(im, origin, contours, positions, examAnswer, 30);
     }
 
-    protected List<Integer> handleZone5(Mat im, Mat origin, List<MatOfPoint> contours) {
+    protected List<Integer> handleZone5(Mat im, Mat origin, List<String> examAnswer, List<MatOfPoint> contours) {
         int[] positions = new int[]{8, 9, 14, 15};
-        return this.doHandle(im, origin, contours, positions);
+        return this.doHandle(im, origin, contours, positions, examAnswer, 40);
     }
 
-    protected List<Integer> doHandle(Mat im, Mat origin, List<MatOfPoint> contours, int[] positions) {
+    protected List<Integer> doHandle(Mat im, Mat origin, List<MatOfPoint> contours, int[] positions, List<String> answersData, int pstAnswer) {
         List<Integer> answers = new ArrayList<>();
         try {
             MatOfPoint mop_1 = contours.get(positions[0]);
@@ -304,13 +308,13 @@ public class DetectRectangle {
             MatOfPoint mop_4 = contours.get(positions[3]);
 
             Rect rect1 = Imgproc.boundingRect(mop_1);
-            Drawing.drawRectPink(dst, mop_1);
+            Drawing.drawRectPink(im, mop_1);
             Rect rect2 = Imgproc.boundingRect(mop_2);
-            Drawing.drawRectPink(dst, mop_2);
+            Drawing.drawRectPink(im, mop_2);
             Rect rect3 = Imgproc.boundingRect(mop_3);
-            Drawing.drawRectPink(dst, mop_3);
+            Drawing.drawRectPink(im, mop_3);
             Rect rect4 = Imgproc.boundingRect(mop_4);
-            Drawing.drawRectPink(dst, mop_4);
+            Drawing.drawRectPink(im, mop_4);
 
             int cX = rect1.x + rect1.width;
             int cY = rect1.y + rect1.height;
@@ -323,23 +327,29 @@ public class DetectRectangle {
             double tbW = (p2.x - p1.x) / 4;
             double tbH = (p3.y - p1.y) / 10;
 
-            int thickness = 2;
             double x;
             double y = p1.y;
             Mat frameROI = new Mat(cIMG, new Rect(cX, cY, rect4.x - cX, rect4.y - cY));
 
-            int bubbleTotal = 0;
             double tX = 0;
             double tY = 0;
-            Point keepStart = null;
-            Point keepEnd = null;
+            int allowLimit = 20;
 
-            int k = 0;
+            int k;
+            int dapAn;
+            int bubbleTotal;
+            Point keepStart, keepEnd;
+            Point keepStartRight, keepEndRight;
             for (int i = 0; i < 10; i++) {
+                dapAn = -2;
+                if (answersData.size() > i + pstAnswer) {
+                    dapAn = this.parseAnswer(answersData.get(i + pstAnswer));
+                }
                 x = p1.x;
                 tX = 0;
-                keepStart = null;
-                keepEnd = null;
+                keepStart = keepEnd = null;
+                keepStartRight = keepEndRight = null;
+
                 bubbleTotal = -1;
                 k = -1;
                 for (int j = 0; j < 4; j++) {
@@ -354,14 +364,19 @@ public class DetectRectangle {
 
                     Core.bitwise_and(frameROI, frameROI, mask, mask);
                     int total = Core.countNonZero(mask);
-                    if (total > bubbleTotal) {
+
+                    if (total > allowLimit && total > bubbleTotal) {
                         bubbleTotal = total;
                         keepStart = pStart;
                         keepEnd = pEnd;
                         k = j;
                     }
-                    Imgproc.rectangle(im, pStart, pEnd, new Scalar(0, 0, 255), thickness);
-                    Imgproc.rectangle(origin, pStart, pEnd, new Scalar(0, 0, 255), thickness);
+                    Imgproc.rectangle(im, pStart, pEnd, new Scalar(0, 0, 255, 255), thickness);
+
+                    if (j == dapAn) {
+                        keepStartRight = pStart;
+                        keepEndRight = pEnd;
+                    }
 
                     mask.release();
                     x += tbW;
@@ -369,8 +384,17 @@ public class DetectRectangle {
                 }
 
                 if (bubbleTotal != -1) {
-                    Imgproc.rectangle(im, keepStart, keepEnd, new Scalar(0, 255, 0), thickness);
-                    Imgproc.rectangle(origin, keepStart, keepEnd, new Scalar(0, 255, 0), thickness);
+                    if (k == dapAn) {
+                        if (keepStart != null && keepEnd != null) {
+                            Imgproc.rectangle(im, keepStart, keepEnd, new Scalar(0, 255, 0, 255), thickness);
+                            Imgproc.rectangle(origin, keepStart, keepEnd, new Scalar(0, 255, 0, 255), thickness);
+                        }
+                    } else {
+                        if (keepStartRight != null && keepEndRight != null) {
+                            Imgproc.rectangle(im, keepStartRight, keepEndRight, new Scalar(255, 0, 0, 255), thickness);
+                            Imgproc.rectangle(origin, keepStartRight, keepEndRight, new Scalar(255, 0, 0, 255), thickness);
+                        }
+                    }
                 }
                 answers.add(k);
 
@@ -412,7 +436,6 @@ public class DetectRectangle {
             double tbW = (p2.x - p1.x) / 4;
             double tbH = (p3.y - p1.y) / 4;
 
-            int thickness = 2;
             double x;
             double y = p1.y;
             Mat frameROI = new Mat(cIMG, new Rect(cX, cY, rect4.x - cX, rect4.y - cY));
@@ -446,8 +469,7 @@ public class DetectRectangle {
                         keepEnd = pEnd;
                         k = j;
                     }
-                    Imgproc.rectangle(im, pStart, pEnd, new Scalar(0, 0, 255), thickness);
-                    Imgproc.rectangle(origin, pStart, pEnd, new Scalar(0, 0, 255), thickness);
+                    Imgproc.rectangle(im, pStart, pEnd, new Scalar(0, 0, 255, 255), thickness);
 
                     mask.release();
 
@@ -456,8 +478,8 @@ public class DetectRectangle {
                 }
 
                 if (bubbleTotal != -1) {
-                    Imgproc.rectangle(im, keepStart, keepEnd, new Scalar(0, 255, 0), thickness);
-                    Imgproc.rectangle(origin, keepStart, keepEnd, new Scalar(0, 255, 0), thickness);
+                    Imgproc.rectangle(im, keepStart, keepEnd, new Scalar(0, 255, 0, 255), thickness);
+                    Imgproc.rectangle(origin, keepStart, keepEnd, new Scalar(0, 255, 0, 255), thickness);
                     this.maDe += k + "";
                 }
 
@@ -466,11 +488,11 @@ public class DetectRectangle {
             }
 
             Imgproc.putText(im, "MADE:" + this.maDe, new Point(250, 80), Core.FONT_HERSHEY_SIMPLEX, 2,
-            new Scalar(255, 255, 255), 2);
+                    new Scalar(255, 255, 255, 255), 2);
             Imgproc.putText(origin, "MADE:" + this.maDe, new Point(250, 80), Core.FONT_HERSHEY_SIMPLEX, 2,
-                    new Scalar(255, 255, 255), 2);
+                    new Scalar(255, 255, 255, 255), 2);
             frameROI.release();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
@@ -484,14 +506,14 @@ public class DetectRectangle {
             int cX = (int) (moment.get_m10() / moment.get_m00());
             int cY = (int) (moment.get_m01() / moment.get_m00());
 
-           // Rect rect = Imgproc.boundingRect(contour);
+            // Rect rect = Imgproc.boundingRect(contour);
             Imgproc.putText(im, contourIdx + "", new Point(cX - 20, cY), Core.FONT_HERSHEY_SIMPLEX, 0.5,
-                    new Scalar(255, 255, 255), 2);
-           // Imgproc.putText(im, rect.width + "," + rect.height, new Point(cX - 40, cY), Core.FONT_HERSHEY_SIMPLEX, 1,
-           //         new Scalar(255, 255, 255), 2);
+                    new Scalar(255, 255, 255, 255), 2);
+            // Imgproc.putText(im, rect.width + "," + rect.height, new Point(cX - 40, cY), Core.FONT_HERSHEY_SIMPLEX, 1,
+            //         new Scalar(255, 255, 255, 255), 2);
         }
 
 //        Imgproc.putText(dst, contours.size() + "", new Point(200, 200), Core.FONT_HERSHEY_SIMPLEX, 2,
-//                new Scalar(0, 255, 255), 2);
+//                new Scalar(0, 255, 255, 255), 2);
     }
 }
