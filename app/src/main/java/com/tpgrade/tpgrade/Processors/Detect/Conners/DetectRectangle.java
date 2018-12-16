@@ -198,7 +198,7 @@ public class DetectRectangle {
                     if (!exams.isEmpty()) {
                         count = examAnswer.size();
                         for (int i = 0; i < count; i++) {
-                            if (answers.get(i) == parseAnswer(examAnswer.get(i))) {
+                            if (answers.get(i) >= 0 && answers.get(i) == parseAnswer(examAnswer.get(i))) {
                                 correct++;
                             }
                         }

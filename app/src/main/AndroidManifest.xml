@@ -93,7 +93,10 @@
             android:name=".ContestKeyAddActivity"
             android:label="@string/contest_nav_key"
             android:parentActivityName=".ContestKeyActivity" />
-        <activity android:name=".ContestKeyViewImageActivity"></activity>
+        <activity
+            android:name=".ContestKeyViewImageActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen"/>
+
     </application>
 
 </manifest>
