@@ -1,17 +1,15 @@
 package com.tpgrade.tpgrade;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.tpgrade.contants.ContantContest;
 import com.tpgrade.models.Exam;
 import com.tpgrade.models.Topic;
 import com.tpgrade.tpgrade.Fragments.ContestKey.AnswerFragment;
@@ -28,17 +26,13 @@ public class ContestKeyAddActivity extends AppCompatActivity implements View.OnC
     public static int EDIT = 2;
 
     int currentAction;
-
-    private long currentTopicId;
-    private Topic topic;
-
     Exam exam;
-
     KeyFragment sMaDe;
     AnswerFragment sDapAn;
-
     ViewPager viewPager;
     TabLayout tabLayout;
+    private long currentTopicId;
+    private Topic topic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +86,8 @@ public class ContestKeyAddActivity extends AppCompatActivity implements View.OnC
         String[] answers = new String[topic.numbers];
         Arrays.fill(answers, "");
         Fragment[] fragments = new Fragment[]{
-            sMaDe = KeyFragment.create(null),
-            sDapAn = AnswerFragment.create(answers)
+                sMaDe = KeyFragment.create(null),
+                sDapAn = AnswerFragment.create(answers)
         };
 
         SSPAdapter adapter = new SSPAdapter(getSupportFragmentManager(), fragments);

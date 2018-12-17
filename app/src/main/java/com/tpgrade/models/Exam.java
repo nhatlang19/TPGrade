@@ -46,13 +46,14 @@ public class Exam extends SugarRecord {
     }
 
     @Override
-    public long save(){
+    public long save() {
         this.answerStr = new Gson().toJson(this.answers);
         return super.save();
     }
 
     public List<String> getAnswers() {
-        return new Gson().fromJson(this.answerStr,new TypeToken<List<String>>(){}.getType());
+        return new Gson().fromJson(this.answerStr, new TypeToken<List<String>>() {
+        }.getType());
     }
 }
 

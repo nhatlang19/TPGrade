@@ -27,20 +27,20 @@ public class FileUtils {
         //new Thread(new Runnable() {
 //            @Override
 //            public void run() {
-                if (photoFile.exists()) {
-                    photoFile.delete();
-                }
+        if (photoFile.exists()) {
+            photoFile.delete();
+        }
 
-                try {
-                    FileOutputStream fos = new FileOutputStream(photoFile.getPath());
+        try {
+            FileOutputStream fos = new FileOutputStream(photoFile.getPath());
 
-                    capturedBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            capturedBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 
-                    fos.flush();
-                    fos.close();
-                } catch (java.io.IOException e) {
-                    Log.e("PictureDemo", "Exception in photoCallback", e);
-                }
+            fos.flush();
+            fos.close();
+        } catch (java.io.IOException e) {
+            Log.e("PictureDemo", "Exception in photoCallback", e);
+        }
 
 //            }
 //        }).start();

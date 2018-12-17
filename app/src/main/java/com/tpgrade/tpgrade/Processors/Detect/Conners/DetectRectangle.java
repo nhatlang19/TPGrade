@@ -39,12 +39,10 @@ public class DetectRectangle {
     protected int threshold;
     protected List<Point[]> listPoints;
     protected List<Question> questions;
-    Context context;
-
     protected String maDe;
     protected double diem;
-
     protected int thickness = 2;
+    Context context;
 
     public DetectRectangle(Context context, Mat dst, Mat gray, Mat original, List<Point[]> listPoints) {
         this.context = context;
@@ -231,7 +229,6 @@ public class DetectRectangle {
         Intent intent = new Intent(context, ContestKeyViewImageActivity.class);
         intent.putExtra(ContantContest.CONTEST_KEY_VIEW_IMAGE_PATH, path);
         context.startActivity(intent);
-
     }
 
     protected int parseAnswer(String key) {
@@ -437,7 +434,7 @@ public class DetectRectangle {
             double tbW = (p2.x - p1.x) / 4;
             double tbH = (p3.y - p1.y) / 4;
 
-            double x;
+            double x = p1.x;
             double y = p1.y;
             Mat frameROI = new Mat(cIMG, new Rect(cX, cY, rect4.x - cX, rect4.y - cY));
             int bubbleTotal;
@@ -447,8 +444,9 @@ public class DetectRectangle {
             Point keepEnd = null;
             int k = 0;
             for (int i = 0; i < 4; i++) {
-                x = p1.x;
-                tX = 0;
+                y = p1.y;
+
+                tY = 0;
                 keepStart = null;
                 keepEnd = null;
                 bubbleTotal = -1;
@@ -473,19 +471,18 @@ public class DetectRectangle {
                     Imgproc.rectangle(dst, pStart, pEnd, new Scalar(0, 0, 255, 255), thickness);
 
                     mask.release();
-
-                    x += tbW;
-                    tX += tbW;
+                    y += tbH;
+                    tY += tbH;
                 }
 
                 if (bubbleTotal != -1) {
                     Imgproc.rectangle(dst, keepStart, keepEnd, new Scalar(0, 255, 0, 255), thickness);
                     Imgproc.rectangle(original, keepStart, keepEnd, new Scalar(0, 255, 0, 255), thickness);
-                    this.maDe += k + "";
+                    this.maDe += (k + 1) + "";
                 }
 
-                y += tbH;
-                tY += tbH;
+                x += tbW;
+                tX += tbW;
             }
 
             Imgproc.putText(dst, "MADE:" + this.maDe, new Point(250, 80), Core.FONT_HERSHEY_SIMPLEX, 2,

@@ -51,7 +51,7 @@ public class RectangleProcessor {
         Point[] r2Points = this.rectanglePoint.getR2Points();
         Point[] r3Points = this.rectanglePoint.getR3Points();
         Point[] r4Points = this.rectanglePoint.getR4Points();
-        List<Point[]> listPoints =  Arrays.asList(r1Points, r2Points, r3Points, r4Points);
+        List<Point[]> listPoints = Arrays.asList(r1Points, r2Points, r3Points, r4Points);
         DetectRectangle rectangle = new DetectRectangle(this.context, inputPicture, inputPictureGray, original, listPoints);
         rectangle.detect();
 

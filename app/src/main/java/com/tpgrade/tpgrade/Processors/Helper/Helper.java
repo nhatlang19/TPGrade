@@ -5,8 +5,6 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class Helper {
     public static Point getPointCenter(Rect rect) {
@@ -26,7 +24,7 @@ public class Helper {
         if (tongSoCau == 0) {
             return 0.0;
         }
-        return ((double)heSoDiem / tongSoCau) * soCauDung;
+        return ((double) heSoDiem / tongSoCau) * soCauDung;
     }
 
     public static String formatNumber(double value) {

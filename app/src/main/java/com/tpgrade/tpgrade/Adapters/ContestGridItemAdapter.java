@@ -11,13 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tpgrade.contants.ContantContest;
-import com.tpgrade.tpgrade.ContestActivity;
 import com.tpgrade.tpgrade.ContestInfoActivity;
 import com.tpgrade.tpgrade.ContestKeyActivity;
 import com.tpgrade.tpgrade.ContestKeyCameraActivity;
 import com.tpgrade.tpgrade.ContestReviewActivity;
-import com.tpgrade.tpgrade.ContestScanActivity;
 import com.tpgrade.tpgrade.ContestStatisticActivity;
 import com.tpgrade.tpgrade.R;
 

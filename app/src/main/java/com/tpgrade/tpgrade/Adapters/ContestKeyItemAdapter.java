@@ -1,7 +1,6 @@
 package com.tpgrade.tpgrade.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tpgrade.Lib.DateUtils;
-import com.tpgrade.contants.ContantContest;
 import com.tpgrade.models.Exam;
-import com.tpgrade.models.Exam;
-import com.tpgrade.tpgrade.ContestActivity;
 import com.tpgrade.tpgrade.R;
 
 import java.util.List;

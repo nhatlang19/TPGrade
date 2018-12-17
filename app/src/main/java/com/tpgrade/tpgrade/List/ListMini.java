@@ -20,52 +20,6 @@ public abstract class ListMini {
         //call create to start display
     }
 
-    public void init(ViewGroup ll) {
-    }
-
-    public void create() {
-        clear();
-        LayoutInflater inflater = LayoutInflater.from(vg.getContext());
-        for (int i = 0; i < getNumber(); i++) {
-            VH vh = createItem(i, inflater);
-            vg.addView(vh.item);
-            vhs.add(vh);
-            update(i);
-        }
-    }
-
-    public abstract VH createItem(int i, LayoutInflater inflater);
-
-    public abstract int getNumber();
-
-    //like bindview
-    public abstract void update(int i);
-
-    public void updateAll() {
-        for (int i = 0; i < getNumber(); i++) update(i);
-    }
-
-    public VH getMiniVH(int i) {
-        return getVhs().get(i);
-    }
-
-    public ArrayList<VH> getVhs() {
-        return vhs;
-    }
-
-    public void clear() {
-        vg.removeAllViews();
-        vhs.clear();
-    }
-
-    public class VH {
-        public View item;
-
-        public VH(View v) {
-            item = v;
-        }
-    }
-
     public static void animationExpand(final View v) {
         v.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         final int targetHeight = v.getMeasuredHeight();
@@ -116,5 +70,51 @@ public abstract class ListMini {
         // 1dp/ms
         a.setDuration((int) (initialHeight / v.getContext().getResources().getDisplayMetrics().density));
         v.startAnimation(a);
+    }
+
+    public void init(ViewGroup ll) {
+    }
+
+    public void create() {
+        clear();
+        LayoutInflater inflater = LayoutInflater.from(vg.getContext());
+        for (int i = 0; i < getNumber(); i++) {
+            VH vh = createItem(i, inflater);
+            vg.addView(vh.item);
+            vhs.add(vh);
+            update(i);
+        }
+    }
+
+    public abstract VH createItem(int i, LayoutInflater inflater);
+
+    public abstract int getNumber();
+
+    //like bindview
+    public abstract void update(int i);
+
+    public void updateAll() {
+        for (int i = 0; i < getNumber(); i++) update(i);
+    }
+
+    public VH getMiniVH(int i) {
+        return getVhs().get(i);
+    }
+
+    public ArrayList<VH> getVhs() {
+        return vhs;
+    }
+
+    public void clear() {
+        vg.removeAllViews();
+        vhs.clear();
+    }
+
+    public class VH {
+        public View item;
+
+        public VH(View v) {
+            item = v;
+        }
     }
 }

@@ -11,8 +11,8 @@ import org.opencv.core.Mat;
 
 public class CaptureImage {
     public static boolean DID_CAPTURE = false;
-    public static String doCapture(Mat mat)
-    {
+
+    public static String doCapture(Mat mat) {
         String path = "";
         Bitmap bmp = null;
         try {
@@ -20,9 +20,8 @@ public class CaptureImage {
             Utils.matToBitmap(mat, bmp);
             path = FileUtils.storePhotoOnDisk(bmp);
             DID_CAPTURE = true;
-        }
-        catch (CvException e){
-            Log.d("Exception",e.getMessage());
+        } catch (CvException e) {
+            Log.d("Exception", e.getMessage());
         }
 
         return path;

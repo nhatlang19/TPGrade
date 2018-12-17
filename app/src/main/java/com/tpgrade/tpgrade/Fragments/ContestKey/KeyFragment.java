@@ -35,8 +35,8 @@ public class KeyFragment extends Fragment {
         LinearLayout[] lls = {
                 (LinearLayout) v.findViewById(R.id.ll2),
                 (LinearLayout) v.findViewById(R.id.ll3),
-                (LinearLayout)  v.findViewById(R.id.ll4),
-                (LinearLayout)  v.findViewById(R.id.ll5)
+                (LinearLayout) v.findViewById(R.id.ll4),
+                (LinearLayout) v.findViewById(R.id.ll5)
         };
 
         String made = getArguments().getString(ARG_MA_DE);
@@ -49,7 +49,7 @@ public class KeyFragment extends Fragment {
             }
         }
         int number = 4;
-        new ListNumber((ViewGroup) v.findViewById(R.id.ll1), number).create();
+        new ListNumber((ViewGroup) v.findViewById(R.id.ll1), number, 1).create();
         lsNumbrer = new ListSelectNumber[4];
         for (int i = 0; i < lsNumbrer.length; i++) {
             lsNumbrer[i] = new ListSelectNumber(lls[i], number, selected[i]);
@@ -61,7 +61,7 @@ public class KeyFragment extends Fragment {
     public String getMaDe() {
         String a = "";
         for (int i = 0; i < lsNumbrer.length; i++) {
-            a += lsNumbrer[i].getSelected();
+            a += lsNumbrer[i].getSelected() + 1;
         }
         if (a.contains("-1")) return null;
         return a;

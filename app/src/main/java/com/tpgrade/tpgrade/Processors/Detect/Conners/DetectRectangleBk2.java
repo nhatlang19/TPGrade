@@ -39,10 +39,9 @@ public class DetectRectangleBk2 {
     protected int threshold;
     protected List<Point[]> listPoints;
     protected List<Question> questions;
-    Context context;
-
     protected String maDe;
     protected double diem;
+    Context context;
 
     public DetectRectangleBk2(Context context, Mat dst, Mat gray, Mat original, List<Point[]> listPoints) {
         this.context = context;
@@ -197,9 +196,9 @@ public class DetectRectangleBk2 {
                         int count = examAnswer.size();
 
                         int correct = 0;
-                        for(int i = 0; i< count; i++) {
+                        for (int i = 0; i < count; i++) {
                             if (answers.get(i) == parseAnswer(examAnswer.get(i))) {
-                                correct ++;
+                                correct++;
                             }
                         }
 
@@ -232,7 +231,7 @@ public class DetectRectangleBk2 {
 
     protected int parseAnswer(String key) {
         int result = -1;
-        switch(key) {
+        switch (key) {
             case "A":
                 result = 0;
                 break;
@@ -423,7 +422,7 @@ public class DetectRectangleBk2 {
 
         try {
             Mat frameROI = new Mat(cIMG, new Rect(cX, cY, rect4.x - cX, rect4.y - cY));
-           // Imgproc.rectangle(im, new Point(cX, cY), new Point(rect4.x, rect4.y), new Scalar(0, 0, 255), 2);
+            // Imgproc.rectangle(im, new Point(cX, cY), new Point(rect4.x, rect4.y), new Scalar(0, 0, 255), 2);
 
             List<MatOfPoint> cs = new ArrayList<>();
             List<MatOfPoint> circles = new ArrayList<>();

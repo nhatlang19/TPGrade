@@ -36,7 +36,7 @@ public class ListSelectNumber extends ListMini implements View.OnClickListener {
         SNumberVH vh = (SNumberVH) getMiniVH(i);
         TextView tv = vh.tv;
         tv.setId(i);
-        tv.setText("" + i);
+        tv.setText("" + (i + 1));
         if (selected == i) tv.setBackgroundResource(R.drawable.bg_circle_1);
         else tv.setBackgroundResource(R.drawable.bg_circle_2);
         tv.setOnClickListener(this);
