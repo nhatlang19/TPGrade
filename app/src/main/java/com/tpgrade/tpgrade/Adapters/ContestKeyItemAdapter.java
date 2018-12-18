@@ -1,17 +1,23 @@
 package com.tpgrade.tpgrade.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tpgrade.Lib.DateUtils;
 import com.tpgrade.models.Exam;
+import com.tpgrade.tpgrade.ContestKeyActivity;
+import com.tpgrade.tpgrade.ContestKeyAddActivity;
+import com.tpgrade.tpgrade.Fragments.Home.EditTopicDialogFragment;
+import com.tpgrade.tpgrade.HomeActivity;
 import com.tpgrade.tpgrade.R;
 
 import java.util.List;
@@ -60,6 +66,14 @@ public class ContestKeyItemAdapter extends RecyclerView.Adapter<ContestKeyItemAd
             }
         });
 
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ContestKeyAddActivity.class);
+                intent.putExtra(ContestKeyAddActivity.EXAMID, Exam.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -95,6 +109,7 @@ public class ContestKeyItemAdapter extends RecyclerView.Adapter<ContestKeyItemAd
         TextView tvCreated;
 
         LinearLayout btnRemove;
+        ImageView btnEdit;
 
         Exam Exam;
 
@@ -106,6 +121,7 @@ public class ContestKeyItemAdapter extends RecyclerView.Adapter<ContestKeyItemAd
 
             layout = (RelativeLayout) itemView.findViewById(R.id.layout);
             btnRemove = (LinearLayout) itemView.findViewById(R.id.btnRemove);
+            btnEdit = (ImageView) itemView.findViewById(R.id.btnEdit);
 
             cv = (CardView) itemView.findViewById(R.id.cv);
         }

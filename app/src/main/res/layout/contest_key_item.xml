@@ -71,6 +71,26 @@
 
         </RelativeLayout>
 
+
+        <RelativeLayout
+            android:id="@+id/left_bottom_wrapper"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:background="@android:color/holo_blue_dark"
+            android:weightSum="1">
+
+            <ImageView
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@android:drawable/ic_menu_edit" />
+        </RelativeLayout>
+
         <!-- add you views or other stuff here -->
 
 

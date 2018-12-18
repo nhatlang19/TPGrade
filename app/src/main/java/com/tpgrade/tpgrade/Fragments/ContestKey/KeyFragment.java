@@ -44,7 +44,7 @@ public class KeyFragment extends Fragment {
         if (made != null && made.length() == 4) {
             try {
                 for (int i = 0; i < selected.length; i++)
-                    selected[i] = Integer.parseInt(String.valueOf(made.charAt(i)));
+                    selected[i] = Integer.parseInt(String.valueOf(made.charAt(i))) - 1;
             } catch (Exception e) {
             }
         }

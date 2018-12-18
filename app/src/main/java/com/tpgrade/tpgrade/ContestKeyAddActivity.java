@@ -16,11 +16,14 @@ import com.tpgrade.tpgrade.Fragments.ContestKey.AnswerFragment;
 import com.tpgrade.tpgrade.Fragments.ContestKey.KeyFragment;
 import com.tpgrade.tpgrade.Fragments.ContestKey.SSPAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ContestKeyAddActivity extends AppCompatActivity implements View.OnClickListener, TabLayout.OnTabSelectedListener {
 
     public static int REQUEST_CODE__CONTEST_KEY_ADD = 2;
+
+    public static String EXAMID = "EXAMID";
 
     public static int ADDNEW = 1;
     public static int EDIT = 2;
@@ -44,7 +47,20 @@ public class ContestKeyAddActivity extends AppCompatActivity implements View.OnC
 
         topic = Topic.findById(Topic.class, currentTopicId);
 
-        this.setUpView();
+        Bundle extras = getIntent().getExtras();
+        currentAction = this.ADDNEW;
+
+        try {
+            int id = (int) extras.getLong(EXAMID, -1);
+            if (id != -1) {
+                exam = Exam.findById(Exam.class, id);
+                currentAction = this.EDIT;
+            }
+        }
+        catch(Exception e) {}
+        finally {
+            this.setUpView();
+        }
     }
 
     @Override
@@ -63,9 +79,15 @@ public class ContestKeyAddActivity extends AppCompatActivity implements View.OnC
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.contest_key_menu__save) {
-            exam = new Exam(sMaDe.getMaDe(), topic, sDapAn.getListDapAn());
-            exam.save();
-
+            if (currentAction == this.ADDNEW) {
+                Exam e = new Exam(sMaDe.getMaDe(), topic, sDapAn.getListDapAn());
+                e.save();
+            } else {
+                exam.examTitle = sMaDe.getMaDe();
+                exam.topic = topic;
+                exam.answers = new ArrayList<>(Arrays.asList(sDapAn.getListDapAn()));
+                exam.save();
+            }
             setResult(Activity.RESULT_OK);
             finish();
             return true;
@@ -85,8 +107,15 @@ public class ContestKeyAddActivity extends AppCompatActivity implements View.OnC
 
         String[] answers = new String[topic.numbers];
         Arrays.fill(answers, "");
+
+        String made = null;
+        if (currentAction == this.EDIT) {
+            made = exam.examTitle;
+            answers = exam.getAnswers().toArray(new String[topic.numbers]);
+        }
+
         Fragment[] fragments = new Fragment[]{
-                sMaDe = KeyFragment.create(null),
+                sMaDe = KeyFragment.create(made),
                 sDapAn = AnswerFragment.create(answers)
         };
 
