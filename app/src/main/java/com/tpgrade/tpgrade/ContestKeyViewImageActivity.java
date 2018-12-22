@@ -10,7 +10,7 @@ import com.tpgrade.tpgrade.Processors.CaptureImage;
 
 public class ContestKeyViewImageActivity extends AppCompatActivity {
 
-    private static int DEPLAY_TIME = 5000;
+    private static int DEPLAY_TIME = 3000;
 
     ImageView imgView;
 

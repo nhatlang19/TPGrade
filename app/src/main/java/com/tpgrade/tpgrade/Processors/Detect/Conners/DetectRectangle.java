@@ -143,7 +143,7 @@ public class DetectRectangle {
                 if (numberVertices == 4 && mincos >= -0.1 && maxcos <= 0.3) {
                     Rect rect = Imgproc.boundingRect(cnt);
                     int index = areaAllow(rect, this.listPoints);
-                    if (index != -1 && index < 4 && rect.width < 30) { // 4 corners
+                    if (index != -1 && index < 4 && Math.abs(rect.width - rect.height) <= 5) { // 4 corners
                         Point p = null;
                         switch (index) {
                             case 0:
@@ -210,9 +210,9 @@ public class DetectRectangle {
                     Point p2 = pointList.get(2);
                     Point p3 = pointList.get(3);
 
-                    Imgproc.putText(dst, Helper.formatNumber(this.diem) + "", new Point(p1.x - 200, p1.y + 150), Core.FONT_HERSHEY_SIMPLEX, 3,
+                    Imgproc.putText(dst, Helper.formatNumber(this.diem) + "", new Point(p1.x - 300, p1.y + 150), Core.FONT_HERSHEY_SIMPLEX, 3,
                             new Scalar(255, 0, 0, 255), 2);
-                    Imgproc.putText(original, Helper.formatNumber(this.diem) + "", new Point(p1.x - 200, p1.y + 150), Core.FONT_HERSHEY_SIMPLEX, 3,
+                    Imgproc.putText(original, Helper.formatNumber(this.diem) + "", new Point(p1.x - 300, p1.y + 150), Core.FONT_HERSHEY_SIMPLEX, 3,
                             new Scalar(255, 0, 0, 255), 2);
 
                     this.saveImage(p0, p3);
@@ -462,6 +462,8 @@ public class DetectRectangle {
                     Imgproc.rectangle(mask, tStart, tEnd, new Scalar(255, 255, 255), -1);
                     Core.bitwise_and(frameROI, frameROI, mask, mask);
                     int total = Core.countNonZero(mask);
+
+//                    System.out.println("TOTAL:" + total);
                     if (total > bubbleTotal) {
                         bubbleTotal = total;
                         keepStart = pStart;
